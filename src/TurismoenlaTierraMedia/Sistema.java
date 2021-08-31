@@ -55,10 +55,10 @@ public class Sistema {
 
 				Usuario usuario = new Usuario(nombre, dinero, tiempo, prefe);
 
-				System.out.println("Bienvenido " + usuario.getNombreDeUsuario() + " a tierra Media");
-				System.out.println("Nuestro sistema lo guiara segun sus preferencias de " + usuario.getPreferencia());
-				System.out.println("Su dinero disponible es " + usuario.getDineroDisponible()
-						+ " y su tiempo disponible es " + usuario.getTiempoDisponible());
+				System.out.println("¡Bienvenido " + usuario.getNombreDeUsuario() + " a La Tierra Media!");
+				System.out.println("Nuestro sistema te guiará según tus preferencias de " + usuario.getPreferencia()+".");
+				System.out.println("Tu dinero disponible es " + usuario.getDineroDisponible()
+						+ " y tu tiempo disponible es " + usuario.getTiempoDisponible()+".");
 
 				System.out.println("Tenemos las siguientes Ofertas y Promociones");
 
