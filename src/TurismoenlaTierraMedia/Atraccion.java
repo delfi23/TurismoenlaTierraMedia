@@ -11,7 +11,8 @@ public class Atraccion implements Comparable<Atraccion> {
 	private double duracionAtraccion;
 	private int cupoPersonas;
 	private TipoAtraccion tipoAtraccion;
-
+	
+	//constructor
 	public Atraccion(String nombreAtraccion, int costoAtraccion, double duracionAtraccion, int cupoPersonas,
 			TipoAtraccion tipoAtraccion) {
 		this.nombreAtraccion = nombreAtraccion;

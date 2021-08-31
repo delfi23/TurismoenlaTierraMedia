@@ -6,6 +6,7 @@ import java.util.*;
 
 
 public class Sistema {
+	//USAR LISTS
 
 	// abrir archivo de clientes
 
