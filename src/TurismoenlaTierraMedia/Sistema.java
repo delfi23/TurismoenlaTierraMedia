@@ -114,7 +114,7 @@ public class Sistema {
 						
 						listaAtracciones.add(atraccion);
 						
-						System.out.println("----------"+listaAtracciones.size());
+						System.out.println("----------"+(listaAtracciones.size()));
 						
 						/*Iterator Atracciones itrAtracciones = atraccion.iterator();
 						
