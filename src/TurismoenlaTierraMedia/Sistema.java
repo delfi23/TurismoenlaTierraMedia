@@ -93,6 +93,7 @@ public class Sistema {
 						Atraccion atraccion = new Atraccion(nombreAtraccion, costo, tiempoAtraccion, cupos, prefe2);
 
 						System.out.println("Atraccion " + atraccion.getNombreAtraccion());
+						System.out.println("De tipo " + atraccion.getTipoAtraccion());
 						System.out.println("Costo de la Atraccion = " + atraccion.getCostoAtraccion());
 						System.out.println("Duracion de la atraccion " + atraccion.getDuracionAtraccion());
 
