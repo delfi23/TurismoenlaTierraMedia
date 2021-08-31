@@ -1,6 +1,9 @@
 package TurismoenlaTierraMedia;
 
 public enum TipoAtraccion {
-	AVENTURA, PAISAJE, DEGUSTACION
+	AVENTURA,
+	BELICA,
+	DEGUSTACION,
+	PAISAJE, 
 
 }

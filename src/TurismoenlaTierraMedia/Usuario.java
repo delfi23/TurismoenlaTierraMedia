@@ -15,7 +15,6 @@ public class Usuario {
 	}
 	
 
-	
 	//devuelve el nombre de usuario
 	public String getNombreDeUsuario() {
 		return this.nombre;
