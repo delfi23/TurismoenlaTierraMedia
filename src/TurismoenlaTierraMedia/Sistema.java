@@ -1,18 +1,153 @@
-package TurismoenlaTierraMedia;
+package turismoenlatierramedia;
 
 import java.io.*;
 import java.util.*;
 
 
-
 public class Sistema {
-	//USAR LISTS
 
-	// abrir archivo de clientes
+	// Se crea la lista de Usuarios
 
-	// cargar el primer cliente
+	public static LinkedList<Usuario> getUsuario(String archivo) {
 
-	// abrir archivos de promociones
+		LinkedList<Usuario> usuario = new LinkedList<Usuario>();
+
+		Scanner sc = null;
+
+		try {
+			sc = new Scanner(new File(archivo));
+
+			while (sc.hasNext()) {
+
+				// Leo cada linea del archivo
+				String linea = sc.nextLine();
+				String datosDeUsuario[] = linea.split(",");
+
+				// Creo un Usuario a partir de los datos leidos
+
+				String nombre = String.valueOf(datosDeUsuario[0]);
+				int dinero = Integer.parseInt(datosDeUsuario[1]);
+				double tiempo = Double.parseDouble(datosDeUsuario[2]);
+				TipoDeAtraccion prefe = TipoDeAtraccion.valueOf(datosDeUsuario[3]);
+
+				Usuario nuevoUsuario = new Usuario(nombre, dinero, tiempo, prefe);
+
+				// Agrego el usuario a la lista
+				usuario.add(nuevoUsuario);
+
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		// cierro archivo
+		sc.close();
+
+		return usuario;
+	}
+	// -------------------------------------------------
+	// Abro archivos Promociones
+
+	public static LinkedList<Atracciones> getAtracciones(String archivo) {
+
+		LinkedList<Atracciones> atracciones = new LinkedList<Atracciones>();
+
+		Scanner sc = null;
+
+		try {
+
+			sc = new Scanner(new File(archivo));
+
+			while (sc.hasNext()) {
+
+				// Leo cada linea del archivo
+				String linea = sc.nextLine();
+				String datosPromociones[] = linea.split(",");
+				String nombreAtraccion = String.valueOf(datosPromociones[0]);
+				int costo = Integer.parseInt(datosPromociones[1]);
+				double tiempoAtraccion = Double.parseDouble(datosPromociones[2]);
+				int cupos = Integer.parseInt(datosPromociones[3]);
+				TipoDeAtraccion prefe2 = TipoDeAtraccion.valueOf(datosPromociones[4]);
+
+				Atracciones atraccion = new Atracciones(nombreAtraccion, costo, tiempoAtraccion, cupos, prefe2);
+
+				// Agrego las atracciones a la lista
+
+				atracciones.add(atraccion);
+
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		// cierro archivo
+		sc.close();
+
+		return atracciones;
+	}
+
+	// ---------------------------------------
+	// ORDENAR ATRACCIONES X COSTO
+	public static void ordenarCosto(List<Atracciones> atraccion) {
+		Collections.sort(atraccion, new AtraccionesOrdenadasPrecio());
+	}
+
+	// --------------------
+	// GRABAR COMPRAS
+	
+
+	
+	public static void escribirCompras(String nombre,double tiempoTotal, int dineroTotal, List<Atracciones> atraccion,
+			String file)
+
+			throws IOException {
+
+		// Se crea el printwriter
+		PrintWriter salida = new PrintWriter(new FileWriter(file));
+
+		// Escribe un encabezado con el nombre
+
+		salida.println("Gracias : " + nombre + " por visitar Tierra Media");
+		salida.println("---------------------------------------------");
+		salida.println("Sus atracciones compradas son : ");
+		salida.println("---------------------------------------------");
+
+		// recorre la lista de compras que genero el usuario
+		for (Atracciones compra : atraccion) {
+			
+			salida.println(compra.getNombreAtraccion());
+
+			
+		}
+		
+		//Escribe el pie con los totales de tiempo y dinero
+			
+		salida.println("---------------------------------------------");
+		salida.println("Su gasto total es de "+dineroTotal+" monedas");
+		salida.println("Su tiempo de permanencia "+tiempoTotal+" horas");
+		
+		//
+		
+		salida.close();
+
+	}
+	
+	
+	// PRUEBO DEVOLVER ATRACCIONES QUE LE GUSTAN
+	
+	public static List<Atracciones> getMeGustan (List<Atracciones> atracciones, TipoDeAtraccion tipo){
+		
+		List <Atracciones> queMeGustan = new ArrayList <Atracciones>();
+		
+		for(Atracciones ca : atracciones)
+			if (ca.getTipoDeAtraccion() == tipo)
+				 queMeGustan.add(ca);
+		
+		for(Atracciones ca : atracciones)
+			if (ca.getTipoDeAtraccion() != tipo)
+				 queMeGustan.add(ca);
+		
+		return queMeGustan;
+	}
+	
 
 	// sugerir la compra de promociones segun sus gustos
 
@@ -30,147 +165,5 @@ public class Sistema {
 
 	// mostrar el resto de promociones que no son
 	// de su gusto.
-
-	public static void main(String[] args) {
-
-		FileReader fr = null;
-		BufferedReader br = null;
-
-		try {
-			// Apertura del fichero y creacion de BufferedReader para poder
-			// hacer una lectura comoda (disponer del metodo readLine()).
-			fr = new FileReader("usuarios.txt");
-			br = new BufferedReader(fr);
-			// Lectura del fichero
-
-			String linea = br.readLine();
-
-			while ((linea != null)) {
-
-				String[] cortaUsuarios = linea.split(",");
-				String nombre = String.valueOf(cortaUsuarios[0]);
-				int dinero = Integer.parseInt(cortaUsuarios[1]);
-				double tiempo = Double.parseDouble(cortaUsuarios[2]);
-				TipoAtraccion prefe = TipoAtraccion.valueOf(cortaUsuarios[3]);
-
-				Usuario usuario = new Usuario(nombre, dinero, tiempo, prefe);
-
-				System.out.println("¡Te damos la bienvenida " + usuario.getNombreDeUsuario() + " a La Tierra Media!");
-				System.out.println("Nuestro sistema te guiará según tus preferencias de " + usuario.getPreferencia()+".");
-				System.out.println("Tu dinero disponible es " + usuario.getDineroDisponible()
-						+ " y tu tiempo disponible es " + usuario.getTiempoDisponible()+".");
-
-				System.out.println("Tenemos las siguientes Ofertas y Promociones");
-
-				// -------------------------------------
-
-				FileReader f2r = null;
-				BufferedReader b2r = null;
-
-				try {
-					// Apertura del fichero y creacion de BufferedReader para poder
-					// hacer una lectura comoda (disponer del metodo readLine()).
-					f2r = new FileReader("atracciones.txt");
-					b2r = new BufferedReader(f2r);
-					// Lectura del fichero
-
-					String lineaAtraccion = b2r.readLine();
-					
-					//Se creo arraylist para tener las atracciones en una lista
-					
-					ArrayList<Atraccion> listaAtracciones = new ArrayList<Atraccion>();
-
-					while ((lineaAtraccion != null)) {
-
-						String[] cortaAtracciones = lineaAtraccion.split(",");
-						String nombreAtraccion = String.valueOf(cortaAtracciones[0]);
-						System.out.println(nombreAtraccion);
-						int costo = Integer.parseInt(cortaAtracciones[1]);
-						double tiempoAtraccion = Double.parseDouble(cortaAtracciones[2]);
-						int cupos = Integer.parseInt(cortaAtracciones[3]);
-						TipoAtraccion prefe2 = TipoAtraccion.valueOf(cortaAtracciones[4]);
-
-						Atraccion atraccion = new Atraccion(nombreAtraccion, costo, tiempoAtraccion, cupos, prefe2);
-
-						System.out.println("Atraccion " + atraccion.getNombreAtraccion());
-						System.out.println("De tipo " + atraccion.getTipoAtraccion());
-						System.out.println("Costo de la Atraccion = " + atraccion.getCostoAtraccion());
-						System.out.println("Duracion de la atraccion " + atraccion.getDuracionAtraccion());
-
-						// ----------------------------------------------
-
-						/*Scanner opcion = new Scanner(System.in);
-						System.out.println("Desea comprar esta oferta S/N");
-						String opt = opcion.next();
-
-						System.out.println(opt);
-
-						if (opt.equals("S")) {
-							System.out.println("usted compro un paquete");
-						}*/
-						
-						//------------------------------------------------
-						
-						
-						
-						listaAtracciones.add(atraccion);
-						
-						System.out.println("----------"+(listaAtracciones.size()));
-						
-						/*Iterator Atracciones itrAtracciones = atraccion.iterator();
-						
-						itrAtracciones = atraccion.iterator();
-						
-						while(listaAtracciones.hasNext()){
-							Atracciones atraccion = itrPartidos.next();
-							System.out.println(atraccion.getNombreAtraccion());
-						}*/
-						
-						
-						
-						
-						
-						lineaAtraccion = b2r.readLine();
-
-					}
-				} catch (IOException e3) {
-					e3.printStackTrace();
-
-				} finally {
-					// En el finally cerramos el fichero, para asegurarnos
-					// que se cierra tanto si todo va bien como si salta
-					// una excepcion.
-					try {
-						if (f2r != null) {
-							f2r.close();
-						}
-					} catch (Exception e4) {
-						e4.printStackTrace();
-					}
-
-					
-					
-					
-					linea = br.readLine();
-
-				}
-			}
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-
-		} finally {
-			// En el finally cerramos el fichero, para asegurarnos
-			// que se cierra tanto si todo va bien como si salta
-			// una excepcion.
-			try {
-				if (fr != null) {
-					fr.close();
-				}
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		}
-	}
 
 }
