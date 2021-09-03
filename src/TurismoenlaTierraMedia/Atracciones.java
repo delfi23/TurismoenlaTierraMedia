@@ -1,25 +1,20 @@
-package TurismoenlaTierraMedia;
 
 
-
-import java.util.Objects;
-
-public class Atraccion implements Comparable<Atraccion> {
+public class Atracciones implements Comparable<Atracciones> {
 
 	private String nombreAtraccion;
 	private int costoAtraccion;
 	private double duracionAtraccion;
 	private int cupoPersonas;
-	private TipoAtraccion tipoAtraccion;
-	
-	//constructor
-	public Atraccion(String nombreAtraccion, int costoAtraccion, double duracionAtraccion, int cupoPersonas,
-			TipoAtraccion tipoAtraccion) {
+	private TipoDeAtraccion tipoDeAtraccion;
+
+	public Atracciones(String nombreAtraccion, int costoAtraccion, double duracionAtraccion, int cupoPersonas,
+			TipoDeAtraccion tipoDeAtraccion) {
 		this.nombreAtraccion = nombreAtraccion;
 		this.costoAtraccion = costoAtraccion;
 		this.duracionAtraccion = duracionAtraccion;
 		this.cupoPersonas = cupoPersonas;
-		this.tipoAtraccion = tipoAtraccion;
+		this.tipoDeAtraccion = tipoDeAtraccion;
 
 	}
 
@@ -39,13 +34,29 @@ public class Atraccion implements Comparable<Atraccion> {
 	}
 
 	// informa el tipo de atraccion que es.
-	public TipoAtraccion getTipoAtraccion() {
-		return this.tipoAtraccion;
+	public TipoDeAtraccion getTipoDeAtraccion() {
+		return this.tipoDeAtraccion;
 	}
 
 	// informa el cupo de personas que queda.
 	public int getCupoPersonas() {
 		return cupoPersonas;
+	}
+	
+	//Descuenta 1 persona al total
+	public void descontarCupo() {
+		this.cupoPersonas -=1;
+	}
+	
+	
+	
+	@Override
+	public String toString() {
+		return nombreAtraccion+","+
+               costoAtraccion+","+
+			   duracionAtraccion+","+
+		       cupoPersonas+","+
+		       tipoDeAtraccion;
 	}
 
 	@Override
@@ -58,7 +69,7 @@ public class Atraccion implements Comparable<Atraccion> {
 		temp = Double.doubleToLongBits(duracionAtraccion);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((nombreAtraccion == null) ? 0 : nombreAtraccion.hashCode());
-		result = prime * result + ((tipoAtraccion == null) ? 0 : tipoAtraccion.hashCode());
+		result = prime * result + ((tipoDeAtraccion == null) ? 0 : tipoDeAtraccion.hashCode());
 		return result;
 	}
 
@@ -70,7 +81,7 @@ public class Atraccion implements Comparable<Atraccion> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Atraccion other = (Atraccion) obj;
+		Atracciones other = (Atracciones) obj;
 		if (costoAtraccion != other.costoAtraccion)
 			return false;
 		if (cupoPersonas != other.cupoPersonas)
@@ -82,13 +93,13 @@ public class Atraccion implements Comparable<Atraccion> {
 				return false;
 		} else if (!nombreAtraccion.equals(other.nombreAtraccion))
 			return false;
-		if (tipoAtraccion != other.tipoAtraccion)
+		if (tipoDeAtraccion != other.tipoDeAtraccion)
 			return false;
 		return true;
 	}
 
 	@Override
-	public int compareTo(Atraccion o) {
+	public int compareTo(Atracciones o) {
 		return this.nombreAtraccion.compareTo(o.nombreAtraccion);
 
 	}
