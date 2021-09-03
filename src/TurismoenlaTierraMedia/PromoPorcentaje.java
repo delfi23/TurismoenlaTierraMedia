@@ -13,13 +13,13 @@ public class PromoPorcentaje extends Promocion {
 	}
 
 	public PromoPorcentaje(Atracciones atraccion1, Atracciones atraccion2, Double Porcent) {
-		super(0.0, atraccion1, atraccion2);
+		super(atraccion1, atraccion2);
 		this.setPorcentajeDescuento(Porcent);
 
 	}
 
 	public PromoPorcentaje(Atracciones atraccion1, Double Porcent) {
-		super(0.0, atraccion1);
+		super(atraccion1);
 		this.setPorcentajeDescuento(Porcent);
 
 	}

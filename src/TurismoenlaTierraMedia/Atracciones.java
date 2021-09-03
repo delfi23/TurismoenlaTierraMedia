@@ -2,18 +2,17 @@ package TurismoenlaTierraMedia;
 
 
 
-public class Atracciones implements Comparable<Atracciones> {
+public class Atracciones extends Producto implements Comparable<Atracciones> {
 
 	private String nombreAtraccion;
-	private int costoAtraccion;
 	private double duracionAtraccion;
 	private int cupoPersonas;
 	private TipoAtraccion tipoDeAtraccion;
 
-	public Atracciones(String nombreAtraccion, int costoAtraccion, double duracionAtraccion, int cupoPersonas,
+	public Atracciones(String nombreAtraccion, Double costoAtraccion, double duracionAtraccion, int cupoPersonas,
 			TipoAtraccion tipoDeAtraccion) {
+		super (costoAtraccion);
 		this.nombreAtraccion = nombreAtraccion;
-		this.costoAtraccion = costoAtraccion;
 		this.duracionAtraccion = duracionAtraccion;
 		this.cupoPersonas = cupoPersonas;
 		this.tipoDeAtraccion = tipoDeAtraccion;
@@ -26,8 +25,8 @@ public class Atracciones implements Comparable<Atracciones> {
 	}
 
 	// informa el costo de la atraccion.
-	public Integer getCostoAtraccion() {
-		return this.costoAtraccion;
+	public Double getCostoAtraccion() {
+		return super.getCosto();
 	}
 
 	// informa la duracion de la atraccion.
@@ -55,7 +54,7 @@ public class Atracciones implements Comparable<Atracciones> {
 	@Override
 	public String toString() {
 		return nombreAtraccion+","+
-               costoAtraccion+","+
+               costo+","+
 			   duracionAtraccion+","+
 		       cupoPersonas+","+
 		       tipoDeAtraccion;
@@ -65,7 +64,7 @@ public class Atracciones implements Comparable<Atracciones> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + costoAtraccion;
+		result = prime * result + costo;
 		result = prime * result + cupoPersonas;
 		long temp;
 		temp = Double.doubleToLongBits(duracionAtraccion);
@@ -84,7 +83,7 @@ public class Atracciones implements Comparable<Atracciones> {
 		if (getClass() != obj.getClass())
 			return false;
 		Atracciones other = (Atracciones) obj;
-		if (costoAtraccion != other.costoAtraccion)
+		if (costo != other.costo)
 			return false;
 		if (cupoPersonas != other.cupoPersonas)
 			return false;
