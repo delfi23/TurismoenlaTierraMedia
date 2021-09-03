@@ -41,7 +41,7 @@ public class AppTierraMedia {
 
 			for (Atracciones atr : misGustos) {
 
-				if (user.getDineroDisponible() >= atr.getCostoAtraccion()) {
+				if (user.puedeComprar(atr)) {
 					
 					// imprime por consola el saldo y el tiempo disponible
 					System.out.println("Su saldo es : " + user.getDineroDisponible() + " Su tiempo disponible es : "
