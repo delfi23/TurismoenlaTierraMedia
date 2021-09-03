@@ -28,7 +28,7 @@ public class Sistema {
 				String nombre = String.valueOf(datosDeUsuario[0]);
 				int dinero = Integer.parseInt(datosDeUsuario[1]);
 				double tiempo = Double.parseDouble(datosDeUsuario[2]);
-				TipoDeAtraccion prefe = TipoDeAtraccion.valueOf(datosDeUsuario[3]);
+				TipoAtraccion prefe = TipoAtraccion.valueOf(datosDeUsuario[3]);
 
 				Usuario nuevoUsuario = new Usuario(nombre, dinero, tiempo, prefe);
 
@@ -66,7 +66,7 @@ public class Sistema {
 				int costo = Integer.parseInt(datosPromociones[1]);
 				double tiempoAtraccion = Double.parseDouble(datosPromociones[2]);
 				int cupos = Integer.parseInt(datosPromociones[3]);
-				TipoDeAtraccion prefe2 = TipoDeAtraccion.valueOf(datosPromociones[4]);
+				TipoAtraccion prefe2 = TipoAtraccion.valueOf(datosPromociones[4]);
 
 				Atracciones atraccion = new Atracciones(nombreAtraccion, costo, tiempoAtraccion, cupos, prefe2);
 

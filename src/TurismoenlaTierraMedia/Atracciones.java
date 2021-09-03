@@ -1,3 +1,5 @@
+package TurismoenlaTierraMedia;
+
 
 
 public class Atracciones implements Comparable<Atracciones> {
@@ -6,10 +8,10 @@ public class Atracciones implements Comparable<Atracciones> {
 	private int costoAtraccion;
 	private double duracionAtraccion;
 	private int cupoPersonas;
-	private TipoDeAtraccion tipoDeAtraccion;
+	private TipoAtraccion tipoDeAtraccion;
 
 	public Atracciones(String nombreAtraccion, int costoAtraccion, double duracionAtraccion, int cupoPersonas,
-			TipoDeAtraccion tipoDeAtraccion) {
+			TipoAtraccion tipoDeAtraccion) {
 		this.nombreAtraccion = nombreAtraccion;
 		this.costoAtraccion = costoAtraccion;
 		this.duracionAtraccion = duracionAtraccion;
@@ -34,7 +36,7 @@ public class Atracciones implements Comparable<Atracciones> {
 	}
 
 	// informa el tipo de atraccion que es.
-	public TipoDeAtraccion getTipoDeAtraccion() {
+	public TipoAtraccion getTipoDeAtraccion() {
 		return this.tipoDeAtraccion;
 	}
 
