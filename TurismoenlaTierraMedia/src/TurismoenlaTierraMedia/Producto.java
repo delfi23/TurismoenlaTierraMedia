@@ -48,10 +48,4 @@ public abstract class Producto {
 		return this.duracionTotal;
 	}
 
-	// Agrega la atrraccion al
-	public void agregarAtraccion(Atracciones atraccion) {
-		// TODO Auto-generated method stub
-
-	}
-
 }
