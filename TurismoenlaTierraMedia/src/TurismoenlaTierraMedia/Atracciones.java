@@ -2,7 +2,7 @@ package TurismoenlaTierraMedia;
 
 public class Atracciones implements Comparable<Atracciones> {
 
-	private String nombreAtraccion;
+	protected String nombreAtraccion;
 	private double costoAtraccion;
 	private double duracionAtraccion;
 	private int cupoPersonas;
@@ -10,7 +10,7 @@ public class Atracciones implements Comparable<Atracciones> {
 
 	public Atracciones(String nombreAtraccion, double costoAtraccion, double duracionAtraccion, int cupoPersonas,
 			TipoAtraccion tipoDeAtraccion) {
-		//super (costoAtraccion);
+		// super (costoAtraccion);
 		this.nombreAtraccion = nombreAtraccion;
 		this.costoAtraccion = costoAtraccion;
 		this.duracionAtraccion = duracionAtraccion;
@@ -43,21 +43,16 @@ public class Atracciones implements Comparable<Atracciones> {
 	public int getCupoPersonas() {
 		return cupoPersonas;
 	}
-	
-	//Descuenta 1 persona al total
+
+	// Descuenta 1 persona al total
 	public void descontarCupo() {
-		this.cupoPersonas -=1;
+		this.cupoPersonas -= 1;
 	}
-	
-	
-	
+
 	@Override
 	public String toString() {
-		return nombreAtraccion+","+
-               costoAtraccion+","+
-			   duracionAtraccion+","+
-		       cupoPersonas+","+
-		       tipoDeAtraccion;
+		return nombreAtraccion + "," + costoAtraccion + "," + duracionAtraccion + "," + cupoPersonas + ","
+				+ tipoDeAtraccion;
 	}
 
 	@Override
@@ -104,6 +99,5 @@ public class Atracciones implements Comparable<Atracciones> {
 		return this.nombreAtraccion.compareTo(o.nombreAtraccion);
 
 	}
-
 
 }

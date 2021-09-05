@@ -3,7 +3,6 @@ package TurismoenlaTierraMedia;
 import java.io.*;
 import java.util.*;
 
-
 public class Sistema {
 
 	// Se crea la lista de Usuarios
@@ -45,7 +44,7 @@ public class Sistema {
 		return usuario;
 	}
 	// -------------------------------------------------
-	// Abro archivos Promociones
+	// Abro archivos Atracciones
 
 	public static LinkedList<Atracciones> getAtracciones(String archivo) {
 
@@ -61,14 +60,14 @@ public class Sistema {
 
 				// Leo cada linea del archivo
 				String linea = sc.nextLine();
-				String datosPromociones[] = linea.split(",");
-				String nombreAtraccion = String.valueOf(datosPromociones[0]);
-				int costo = Integer.parseInt(datosPromociones[1]);
-				double tiempoAtraccion = Double.parseDouble(datosPromociones[2]);
-				int cupos = Integer.parseInt(datosPromociones[3]);
-				TipoAtraccion prefe2 = TipoAtraccion.valueOf(datosPromociones[4]);
+				String datosAtracciones[] = linea.split(",");
+				String nombreAtraccion = String.valueOf(datosAtracciones[0]);
+				int costo = Integer.parseInt(datosAtracciones[1]);
+				double tiempoAtraccion = Double.parseDouble(datosAtracciones[2]);
+				int cupos = Integer.parseInt(datosAtracciones[3]);
+				TipoAtraccion tipo = TipoAtraccion.valueOf(datosAtracciones[4]);
 
-				Atracciones atraccion = new Atracciones(nombreAtraccion, costo, tiempoAtraccion, cupos, prefe2);
+				Atracciones atraccion = new Atracciones(nombreAtraccion, costo, tiempoAtraccion, cupos, tipo);
 
 				// Agrego las atracciones a la lista
 
@@ -92,10 +91,8 @@ public class Sistema {
 
 	// --------------------
 	// GRABAR COMPRAS
-	
 
-	
-	public static void escribirCompras(String nombre,double tiempoTotal, int dineroTotal, List<Atracciones> atraccion,
+	public static void escribirCompras(String nombre, double tiempoTotal, int dineroTotal, List<Atracciones> atraccion,
 			String file)
 
 			throws IOException {
@@ -112,42 +109,123 @@ public class Sistema {
 
 		// recorre la lista de compras que genero el usuario
 		for (Atracciones compra : atraccion) {
-			
+
 			salida.println(compra.getNombreAtraccion());
 
-			
 		}
-		
-		//Escribe el pie con los totales de tiempo y dinero
-			
+
+		// Escribe el pie con los totales de tiempo y dinero
+
 		salida.println("---------------------------------------------");
-		salida.println("Su gasto total es de "+dineroTotal+" monedas");
-		salida.println("Su tiempo de permanencia "+tiempoTotal+" horas");
-		
+		salida.println("Su gasto total es de " + dineroTotal + " monedas");
+		salida.println("Su tiempo de permanencia " + tiempoTotal + " horas");
+
 		//
-		
+
 		salida.close();
 
 	}
-	
-	
+
 	// PRUEBO DEVOLVER ATRACCIONES QUE LE GUSTAN
-	
-	public static List<Atracciones> getMeGustan (List<Atracciones> atracciones, TipoAtraccion tipo){
-		
-		List <Atracciones> queMeGustan = new ArrayList <Atracciones>();
-		
-		for(Atracciones ca : atracciones)
+
+	public static List<Atracciones> getMeGustan(List<Atracciones> atracciones, TipoAtraccion tipo) {
+
+		List<Atracciones> queMeGustan = new ArrayList<Atracciones>();
+
+		for (Atracciones ca : atracciones)
 			if (ca.getTipoDeAtraccion() == tipo)
-				 queMeGustan.add(ca);
-		
-		for(Atracciones ca : atracciones)
+				queMeGustan.add(ca);
+
+		for (Atracciones ca : atracciones)
 			if (ca.getTipoDeAtraccion() != tipo)
-				 queMeGustan.add(ca);
-		
+				queMeGustan.add(ca);
+
 		return queMeGustan;
 	}
-	
+
+	// -----------------------
+	// Abro archivo Promociones y creo Lista
+
+	public static LinkedList<Producto> getProductos(String archivo) {
+
+		LinkedList<Producto> productos = new LinkedList<Producto>();
+		Scanner sc = null;
+
+		try {
+			sc = new Scanner(new File(archivo));
+
+			while (sc.hasNext()) {
+
+				// Leo cada linea del archivo
+				String linea = sc.nextLine();
+				String[] datosPromo = linea.split(",");
+
+				String tipo = String.valueOf(datosPromo[0]);
+
+				Producto promo = null;
+				Atracciones[] atracIncluidas = null;
+
+				// Agrega al array de atracciones aquellas incluidas en la Promo
+				for (int i = 1; i < datosPromo.length - 1; i++) {
+					atracIncluidas[i] = obtenerAtraccion(datosPromo[i]);
+				}
+
+				if (tipo.equalsIgnoreCase("Por")) {
+					/*
+					 * PromoPorcentual la creo mandando el array atracciones en primer parametro y
+					 * el dato del porcentaje de descuento como segundo
+					 */
+					promo = new PromoPorcentaje(atracIncluidas,
+							(double) Integer.parseInt(datosPromo[datosPromo.length - 1]));
+				} else if (tipo.equalsIgnoreCase("AxB")) {
+					/*
+					 * PromoPorcentual la creo mandando el array atracciones en primer parametro y
+					 * la atraccion que es gratuita en segundo
+					 */
+					promo = new PromoAxB(atracIncluidas, obtenerAtraccion(datosPromo[datosPromo.length - 1]));
+				} else if (tipo.equalsIgnoreCase("Abs")) {
+					/*
+					 * PromoPorcentual la creo mandando el array atracciones en primer parametro y
+					 * el dato del costo final obtenido del archivo
+					 */
+					promo = new PromoAbsoluta(atracIncluidas,
+							(double) Integer.parseInt(datosPromo[datosPromo.length - 1]));
+				}
+
+				// Agrego la promo a la lista de productos
+				productos.add(promo);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		// cierro archivo
+		sc.close();
+
+		return productos;
+	}
+
+	// Obtiene el objeto Atraccion a partir del String "nombreAtraccion" del archivo
+	// promociones
+	private static Atracciones obtenerAtraccion(String nombreAtraccion) {
+		Atracciones atraccion = null;
+
+		// obtengo la lista a iterar
+		LinkedList<Atracciones> lista = Sistema.getAtracciones("atracciones.in");
+
+		// creo el objeto Iterator para recorrer la lista de Atracciones
+		Iterator<Atracciones> atracIterar = lista.iterator();
+
+		while (atracIterar.hasNext()) {
+			Atracciones atrac = atracIterar.next();
+
+			// si el nombre pasado como parametro coincide con el del iterador
+			// devuelvo esa atraccion
+			if (nombreAtraccion.equalsIgnoreCase(atrac.nombreAtraccion)) {
+				atraccion = atrac;
+			}
+		}
+		return atraccion;
+	}
 
 	// sugerir la compra de promociones segun sus gustos
 
