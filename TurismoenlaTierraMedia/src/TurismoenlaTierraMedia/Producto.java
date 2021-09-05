@@ -10,6 +10,7 @@ public abstract class Producto {
 	public Producto(Atracciones[] atracciones) {
 		this.atracciones = atracciones;
 		this.setCostoTotal(atracciones);
+		this.setDuracionTotal(atracciones);
 	}
 
 	public Atracciones[] getAtracciones() {
