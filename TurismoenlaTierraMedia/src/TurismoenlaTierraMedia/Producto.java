@@ -3,8 +3,8 @@ package TurismoenlaTierraMedia;
 public abstract class Producto {
 
 	protected Atracciones[] atracciones;
-	private double costoTotal;
-	private double duracionTotal;
+	protected double costoTotal;
+	protected double duracionTotal;
 
 	// Constructor
 	public Producto(Atracciones[] atracciones) {
@@ -16,7 +16,8 @@ public abstract class Producto {
 	public Atracciones[] getAtracciones() {
 		return this.atracciones;
 	}
-
+	
+	
 	// Set el precio SIN el descuento
 	public void setCostoTotal(Atracciones[] atrIncluidas) {
 		double costo = 0;
@@ -25,12 +26,13 @@ public abstract class Producto {
 		}
 		this.costoTotal = costo;
 	}
-
+	
 	// Obtener el precio SIN descuento
-	public Double getCostoTotal() {
+	public Double getCostoTotal(){
 		return this.costoTotal;
 	}
-
+	
+	
 	// Obtenga precio con descuento
 	public abstract Double getPrecioDescuento();
 

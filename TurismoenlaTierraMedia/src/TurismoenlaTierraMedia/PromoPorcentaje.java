@@ -17,8 +17,9 @@ public class PromoPorcentaje extends Producto {
 	public Double getPrecioDescuento() {
 		return super.getCostoTotal() - (super.getCostoTotal() * this.getPorcentajeDescuento());
 	}
-
+	
 	public double getPorcentajeDescuento() {
-		return this.porcentajeDescuento;
+		return this.porcentajeDescuento/100;
 	}
+
 }

@@ -19,6 +19,9 @@ public class Atracciones implements Comparable<Atracciones> {
 
 	}
 
+	public Atracciones() {
+	}
+
 	// informa el nombre de la atraccion
 	public String getNombreAtraccion() {
 		return this.nombreAtraccion;

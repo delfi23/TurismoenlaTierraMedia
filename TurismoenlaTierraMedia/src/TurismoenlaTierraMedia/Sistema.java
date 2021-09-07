@@ -156,18 +156,18 @@ public class Sistema {
 
 			while (sc.hasNext()) {
 
-				// Leo cada linea del archivo
+				// Leo cada linea del archivo 
 				String linea = sc.nextLine();
 				String[] datosPromo = linea.split(",");
 
 				String tipo = String.valueOf(datosPromo[0]);
 
 				Producto promo = null;
-				Atracciones[] atracIncluidas = null;
+				Atracciones[] atracIncluidas = new Atracciones[2];
 
 				// Agrega al array de atracciones aquellas incluidas en la Promo
 				for (int i = 1; i < datosPromo.length - 1; i++) {
-					atracIncluidas[i] = obtenerAtraccion(datosPromo[i]);
+					atracIncluidas[i-1] = obtenerAtraccion(datosPromo[i]);
 				}
 
 				if (tipo.equalsIgnoreCase("Por")) {
@@ -207,23 +207,26 @@ public class Sistema {
 	// Obtiene el objeto Atraccion a partir del String "nombreAtraccion" del archivo
 	// promociones
 	private static Atracciones obtenerAtraccion(String nombreAtraccion) {
-		Atracciones atraccion = null;
+		Atracciones atraccion = new Atracciones();
 
 		// obtengo la lista a iterar
 		LinkedList<Atracciones> lista = Sistema.getAtracciones("atracciones.in");
 
-		// creo el objeto Iterator para recorrer la lista de Atracciones
-		Iterator<Atracciones> atracIterar = lista.iterator();
+		if(atraccion != null) {
+			// creo el objeto Iterator para recorrer la lista de Atracciones
+			Iterator<Atracciones> atracIterar = lista.iterator();
 
-		while (atracIterar.hasNext()) {
-			Atracciones atrac = atracIterar.next();
+			while (atracIterar.hasNext()) {
+				Atracciones atrac = atracIterar.next();
 
-			// si el nombre pasado como parametro coincide con el del iterador
-			// devuelvo esa atraccion
-			if (nombreAtraccion.equalsIgnoreCase(atrac.nombreAtraccion)) {
-				atraccion = atrac;
+				// si el nombre pasado como parametro coincide con el del iterador
+				// devuelvo esa atraccion
+				if (nombreAtraccion.equalsIgnoreCase(atrac.nombreAtraccion)) {
+					atraccion = atrac;
+					break;
+				}
 			}
-		}
+		}	
 		return atraccion;
 	}
 
