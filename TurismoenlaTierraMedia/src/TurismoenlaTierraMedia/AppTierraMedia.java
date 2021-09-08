@@ -14,7 +14,11 @@ public class AppTierraMedia {
 
 		List<Atracciones> atracciones = Sistema.getAtracciones("atracciones.in");
 		
-		List<Producto> promociones = Sistema.getProductos("promociones.txt");
+		// Crea una lista tipo Producto con sólo las Promos
+		List<Producto> promociones = Sistema.getPromociones("promociones.txt");
+		
+		// Crea una lista tipo Producto con todos los productos finales
+		List<Producto> productosFinales = Sistema.getProductoFinal(promociones);
 
 		Sistema.ordenarCosto(atracciones);
 
@@ -101,18 +105,17 @@ public class AppTierraMedia {
 			
 		}
 		
-				
-		// CHEQUEO QUE SE GUARDEN BIEN LAS PROMOCIONES
-		// Imprimo lo que incluye mas precio con descuento y duracion
+		//------------------------------------------------------------------------------------------------------
+		// CHEQUEO QUE ME GUARDE BIEN LOS PRODUCTOS A LA LISTA FINAL
 		
-		for(Producto promo: promociones) {
-			Atracciones [] atrIncluidas = promo.getAtracciones();
+		for(Producto opciones: productosFinales) {
+			String [] nombresAtrIncluidas = opciones.getNombreAtracciones();
 			System.out.println("Inluye: ");
-			for( int i = 0; i < atrIncluidas.length; i++) {
-				System.out.println(atrIncluidas[i].getNombreAtraccion());
+			for( int i = 0; i < nombresAtrIncluidas.length; i++) {
+				System.out.println(nombresAtrIncluidas[i]);
 			}
-			System.out.println("a un precio de " + promo.getPrecioDescuento() + 
-					" monedas y dura " + promo.getDuracionTotal());
+			System.out.println("a un precio de " + opciones.getPrecioDescuento() + 
+					" monedas y dura " + opciones.getDuracionTotal());
 			System.out.println();
 		}
 		

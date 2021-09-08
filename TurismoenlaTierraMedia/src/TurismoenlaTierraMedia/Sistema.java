@@ -143,10 +143,10 @@ public class Sistema {
 		return queMeGustan;
 	}
 
-	// -----------------------
-	// Abro archivo Promociones y creo Lista
+	// ---------------------------------------------------------------------------------
+	// Abro archivo Promociones y creo Lista Producto con ellas
 
-	public static LinkedList<Producto> getProductos(String archivo) {
+	public static LinkedList<Producto> getPromociones(String archivo) {
 
 		LinkedList<Producto> productos = new LinkedList<Producto>();
 		Scanner sc = null;
@@ -156,18 +156,18 @@ public class Sistema {
 
 			while (sc.hasNext()) {
 
-				// Leo cada linea del archivo 
+				// Leo cada linea del archivo
 				String linea = sc.nextLine();
 				String[] datosPromo = linea.split(",");
 
 				String tipo = String.valueOf(datosPromo[0]);
 
-				Producto promo = null;
+				Producto prod = null;
 				Atracciones[] atracIncluidas = new Atracciones[2];
 
 				// Agrega al array de atracciones aquellas incluidas en la Promo
 				for (int i = 1; i < datosPromo.length - 1; i++) {
-					atracIncluidas[i-1] = obtenerAtraccion(datosPromo[i]);
+					atracIncluidas[i - 1] = obtenerAtraccion(datosPromo[i]);
 				}
 
 				if (tipo.equalsIgnoreCase("Por")) {
@@ -175,25 +175,26 @@ public class Sistema {
 					 * PromoPorcentual la creo mandando el array atracciones en primer parametro y
 					 * el dato del porcentaje de descuento como segundo
 					 */
-					promo = new PromoPorcentaje(atracIncluidas,
+
+					prod = new PromoPorcentaje(atracIncluidas,
 							(double) Integer.parseInt(datosPromo[datosPromo.length - 1]));
 				} else if (tipo.equalsIgnoreCase("AxB")) {
 					/*
 					 * PromoPorcentual la creo mandando el array atracciones en primer parametro y
 					 * la atraccion que es gratuita en segundo
 					 */
-					promo = new PromoAxB(atracIncluidas, obtenerAtraccion(datosPromo[datosPromo.length - 1]));
+					prod = new PromoAxB(atracIncluidas, obtenerAtraccion(datosPromo[datosPromo.length - 1]));
 				} else if (tipo.equalsIgnoreCase("Abs")) {
 					/*
 					 * PromoPorcentual la creo mandando el array atracciones en primer parametro y
 					 * el dato del costo final obtenido del archivo
 					 */
-					promo = new PromoAbsoluta(atracIncluidas,
+					prod = new PromoAbsoluta(atracIncluidas,
 							(double) Integer.parseInt(datosPromo[datosPromo.length - 1]));
 				}
 
 				// Agrego la promo a la lista de productos
-				productos.add(promo);
+				productos.add(prod);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -212,7 +213,7 @@ public class Sistema {
 		// obtengo la lista a iterar
 		LinkedList<Atracciones> lista = Sistema.getAtracciones("atracciones.in");
 
-		if(atraccion != null) {
+		if (atraccion != null) {
 			// creo el objeto Iterator para recorrer la lista de Atracciones
 			Iterator<Atracciones> atracIterar = lista.iterator();
 
@@ -226,8 +227,36 @@ public class Sistema {
 					break;
 				}
 			}
-		}	
+		}
 		return atraccion;
+	}
+
+	//-------------------------------------------------------------------------------------
+	
+	// AGREGO LAS ATRACCIONES SIMPLES A LA LISTA PRODUCTO QUE TIENE LAS PROMOS
+	// Recibe como parametro la lista tipo Producto con las promos 
+	
+	public static List<Producto> getProductoFinal(List<Producto> listaProductos) {
+
+		Producto productoAgregar = null;
+
+		// obtengo la lista de atracciones
+		LinkedList<Atracciones> lista = Sistema.getAtracciones("atracciones.in");
+
+		// creo el objeto Iterator para recorrer la lista de Atracciones
+		Iterator<Atracciones> Iterator = lista.iterator();
+
+		while (Iterator.hasNext()) {
+			Atracciones atrac = Iterator.next();
+			
+			// Creo el objeto a agregar 
+			productoAgregar = new Atracciones (atrac.getNombreAtraccion(), atrac.getCostoAtraccion(), atrac.getDuracionAtraccion());
+
+			// Guarde la atraccion en la lista de tipo Producto
+			listaProductos.add(productoAgregar);
+		}
+
+		return listaProductos;
 	}
 
 	// sugerir la compra de promociones segun sus gustos

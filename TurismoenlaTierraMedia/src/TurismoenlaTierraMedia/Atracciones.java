@@ -1,25 +1,27 @@
 package TurismoenlaTierraMedia;
 
-public class Atracciones implements Comparable<Atracciones> {
+public class Atracciones extends Producto implements Comparable<Atracciones> {
 
 	protected String nombreAtraccion;
-	private double costoAtraccion;
-	private double duracionAtraccion;
 	private int cupoPersonas;
 	private TipoAtraccion tipoDeAtraccion;
 
 	public Atracciones(String nombreAtraccion, double costoAtraccion, double duracionAtraccion, int cupoPersonas,
 			TipoAtraccion tipoDeAtraccion) {
-		// super (costoAtraccion);
+		super (costoAtraccion, duracionAtraccion);
 		this.nombreAtraccion = nombreAtraccion;
-		this.costoAtraccion = costoAtraccion;
-		this.duracionAtraccion = duracionAtraccion;
 		this.cupoPersonas = cupoPersonas;
 		this.tipoDeAtraccion = tipoDeAtraccion;
 
 	}
+	
+	public Atracciones(String nombreAtraccion, double costoAtraccion, double duracionAtraccion) {
+		super (costoAtraccion, duracionAtraccion);
+		this.nombreAtraccion = nombreAtraccion;
+	}
 
 	public Atracciones() {
+		super();
 	}
 
 	// informa el nombre de la atraccion
@@ -29,12 +31,12 @@ public class Atracciones implements Comparable<Atracciones> {
 
 	// informa el costo de la atraccion.
 	public Double getCostoAtraccion() {
-		return this.costoAtraccion;
+		return super.costoTotal;
 	}
 
 	// informa la duracion de la atraccion.
 	public double getDuracionAtraccion() {
-		return this.duracionAtraccion;
+		return super.duracionTotal;
 	}
 
 	// informa el tipo de atraccion que es.
@@ -51,10 +53,24 @@ public class Atracciones implements Comparable<Atracciones> {
 	public void descontarCupo() {
 		this.cupoPersonas -= 1;
 	}
+	
+	// Para la lista producto
+	@Override
+	public Double getPrecioDescuento() {
+		return super.costoTotal;
+	}
+	
+	// Para la lista producto comvierto el nombre a string
+	@Override
+	public String[] getNombreAtracciones() {
+		String [] nombre = new String [1];
+		nombre[0]  = this.nombreAtraccion;
+		return nombre;
+	}
 
 	@Override
 	public String toString() {
-		return nombreAtraccion + "," + costoAtraccion + "," + duracionAtraccion + "," + cupoPersonas + ","
+		return nombreAtraccion + "," + super.costoTotal + "," + super.duracionTotal + "," + cupoPersonas + ","
 				+ tipoDeAtraccion;
 	}
 
@@ -62,10 +78,10 @@ public class Atracciones implements Comparable<Atracciones> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = (int) (prime * result + costoAtraccion);
+		result = (int) (prime * result + super.costoTotal);
 		result = prime * result + cupoPersonas;
 		long temp;
-		temp = Double.doubleToLongBits(duracionAtraccion);
+		temp = Double.doubleToLongBits(super.duracionTotal);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((nombreAtraccion == null) ? 0 : nombreAtraccion.hashCode());
 		result = prime * result + ((tipoDeAtraccion == null) ? 0 : tipoDeAtraccion.hashCode());
@@ -81,11 +97,11 @@ public class Atracciones implements Comparable<Atracciones> {
 		if (getClass() != obj.getClass())
 			return false;
 		Atracciones other = (Atracciones) obj;
-		if (costoAtraccion != other.costoAtraccion)
+		if (super.costoTotal != other.getCostoAtraccion())
 			return false;
 		if (cupoPersonas != other.cupoPersonas)
 			return false;
-		if (Double.doubleToLongBits(duracionAtraccion) != Double.doubleToLongBits(other.duracionAtraccion))
+		if (Double.doubleToLongBits(super.duracionTotal) != Double.doubleToLongBits(other.getCostoAtraccion()))
 			return false;
 		if (nombreAtraccion == null) {
 			if (other.nombreAtraccion != null)
@@ -102,5 +118,4 @@ public class Atracciones implements Comparable<Atracciones> {
 		return this.nombreAtraccion.compareTo(o.nombreAtraccion);
 
 	}
-
 }
