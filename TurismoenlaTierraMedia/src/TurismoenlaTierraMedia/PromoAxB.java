@@ -1,19 +1,19 @@
-package TurismoenlaTierraMedia;
+package turismotierramedia;
 
 public class PromoAxB extends Producto{
 	
 	private Atracciones atrGratis;
 	protected Atracciones [] atracciones;
 
-	public PromoAxB(Atracciones[] atracciones, Atracciones atrGratis) {
-		super(atracciones);
+	public PromoAxB(Atracciones[] atracciones, Atracciones atrGratis, String nombre, TipoAtraccion tipoAtraccion) {
+		super(atracciones, nombre, tipoAtraccion);
 		this.atrGratis = atrGratis;
 		this.atracciones = atracciones;
 	}
 
 	// Obtener precio CON descuento
 	@Override
-	public Double getPrecioDescuento() {
+	public double getPrecioDescuento() {
 		return this.getCostoTotal() - this.getDescuento();
 	}
 
@@ -29,7 +29,7 @@ public class PromoAxB extends Producto{
 	}
 	
 	// Obtener duracion sumando el tiempo de la Atraccion gratis
-	public Double getDuracionTotal() {
+	public double getDuracionTotal() {
 		return super.duracionTotal + atrGratis.getDuracionAtraccion();
 	}
 	 
@@ -48,6 +48,21 @@ public class PromoAxB extends Producto{
 		return atrIncluidas;
 	}
 	
+	@Override
+	public void descontarCupoProducto() {
+	
+	for (int i = 0; i < this.atracciones.length; i++) {
+		
+		this.atracciones[i].descontarCupoAtraccion();
+		
+		}
+
+}
+	
+	
+	
+	
+	
 	// obtener nombre atracciones
 	@Override
 	public String[] getNombreAtracciones() {
@@ -58,4 +73,5 @@ public class PromoAxB extends Producto{
 		}
 		return nombres;
 	}
+
 }

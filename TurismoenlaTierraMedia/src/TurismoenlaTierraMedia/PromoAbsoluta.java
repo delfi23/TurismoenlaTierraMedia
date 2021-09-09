@@ -1,12 +1,14 @@
-package TurismoenlaTierraMedia;
+package turismotierramedia;
 
 public class PromoAbsoluta extends Producto{
+	
+	
 	
 	private Double precioFinal;
 	protected Atracciones [] atracciones;
 
-	public PromoAbsoluta(Atracciones[] atracciones, Double precioFinal) {
-		super(atracciones);
+	public PromoAbsoluta(Atracciones[] atracciones, Double precioFinal, String nombre, TipoAtraccion tipoAtraccion) {
+		super(atracciones, nombre, tipoAtraccion);
 		this.setDescuentoAbsoluto(precioFinal);
 		this.atracciones = atracciones;
 	}
@@ -17,9 +19,22 @@ public class PromoAbsoluta extends Producto{
 
 	// Obtener precio CON descuento
 	@Override
-	public Double getPrecioDescuento() {
+	public double getPrecioDescuento() {
 		return this.precioFinal;
 	}
+	
+	@Override
+	public void descontarCupoProducto() {
+	
+	for (int i = 0; i < this.atracciones.length; i++) {
+		
+		this.atracciones[i].descontarCupoAtraccion();
+		
+		}
+
+}
+	
+	
 	
 	// Obtener el nombre de las atracciones
 	@Override
@@ -30,4 +45,5 @@ public class PromoAbsoluta extends Producto{
 		}
 		return nombres;
 	}
+	
 }

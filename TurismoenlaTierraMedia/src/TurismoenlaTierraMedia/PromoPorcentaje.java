@@ -1,29 +1,45 @@
-package TurismoenlaTierraMedia;
+package turismotierramedia;
 
 public class PromoPorcentaje extends Producto{
 	
 	protected Atracciones[] atracciones;
-	private Double porcentajeDescuento;
+	private double porcentajeDescuento;
 
-	public PromoPorcentaje(Atracciones[] atracciones, Double Porcent) {
-		super(atracciones);
+	public PromoPorcentaje(Atracciones[] atracciones, double Porcent, String nombre, TipoAtraccion tipoAtraccion) {
+		super(atracciones, nombre, tipoAtraccion);
 		this.atracciones = atracciones;
 		this.setPorcentajeDescuento(Porcent);
 	}
 
-	public void setPorcentajeDescuento(Double porcentaje) {
+	public void setPorcentajeDescuento(double porcentaje) {
 		this.porcentajeDescuento = porcentaje;
 	}
 
 	// Obtener precio CON descuento
 	@Override
-	public Double getPrecioDescuento() {
+	public double getPrecioDescuento() {
 		return super.getCostoTotal() - (super.getCostoTotal() * this.getPorcentajeDescuento());
 	}
 	
 	public double getPorcentajeDescuento() {
 		return this.porcentajeDescuento/100;
 	}
+	
+	@Override
+	public void descontarCupoProducto() {
+	
+	for (int i = 0; i < this.atracciones.length; i++) {
+		
+		this.atracciones[i].descontarCupoAtraccion();
+		
+		}
+
+}
+	
+	
+	
+	
+	
 
 	// obtener nombre atracciones
 	@Override
