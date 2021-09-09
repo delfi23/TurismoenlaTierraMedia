@@ -1,6 +1,0 @@
-Por,Bosque Negro,Mordor,20
-Abs,Lothlorien,La Comarca,36
-AxB,Minas Tirith,Abismo de Helm,Erebor
-Por,Moria,Mordor,10
-Abs,Erebor,Minas Tirith,15
-AxB,Moria,Mordor,Bosque Negro
