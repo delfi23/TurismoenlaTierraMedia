@@ -87,8 +87,12 @@ public class Atracciones extends Producto implements Comparable<Atracciones> {
 				+ super.tipoAtraccion;
 	}
 
-	
-
+	@Override
+	public ArrayList <Atracciones> getAtracciones() {
+		ArrayList<Atracciones> atrac = new ArrayList<>();
+		atrac.add(this);
+		return atrac;
+	}
 	
 
 	@Override

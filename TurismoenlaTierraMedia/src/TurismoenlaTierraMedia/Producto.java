@@ -78,7 +78,7 @@ public abstract class Producto {
 	
 	public abstract void descontarCupoProducto();
 		
-		
+	public abstract ArrayList<Atracciones> getAtracciones();
 		
 		
 	

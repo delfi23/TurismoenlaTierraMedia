@@ -97,7 +97,7 @@ public class Sistema {
 	// --------------------
 	// GRABAR COMPRAS
 
-	public static void escribirCompras(String nombre, double tiempoTotal, int dineroTotal, List<Producto> producto,
+	public static void escribirCompras(String nombre, double tiempoTotal, int dineroTotal, List<Atracciones> producto,
 			String file)
 
 			throws IOException {

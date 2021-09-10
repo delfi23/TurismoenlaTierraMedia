@@ -49,4 +49,9 @@ public class PromoPorcentaje extends Producto{
 		return nombres;
 	}
 	
+	@Override
+	public ArrayList<Atracciones> getAtracciones() {
+		return this.atracciones;
+	}
+	
 }

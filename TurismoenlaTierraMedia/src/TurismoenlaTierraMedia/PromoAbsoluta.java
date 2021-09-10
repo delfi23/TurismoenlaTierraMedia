@@ -48,4 +48,9 @@ public class PromoAbsoluta extends Producto{
 		return nombres;
 	}
 	
+	@Override
+	public ArrayList<Atracciones> getAtracciones() {
+		return this.atracciones;
+	}
+	
 }

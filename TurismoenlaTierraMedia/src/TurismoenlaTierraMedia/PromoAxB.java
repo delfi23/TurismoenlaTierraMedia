@@ -37,6 +37,7 @@ public class PromoAxB extends Producto {
 	}
 
 	// Para que guarde en atracciones incluidas la atraccion Gratis
+	@Override
 	public ArrayList<Atracciones> getAtracciones() {
 		this.atracciones.add(atrGratis);
 		return this.atracciones;
