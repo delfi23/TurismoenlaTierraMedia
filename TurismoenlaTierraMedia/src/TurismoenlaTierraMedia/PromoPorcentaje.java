@@ -1,14 +1,14 @@
 package TurismoenlaTierraMedia;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class PromoPorcentaje extends Producto{
-	
+public class PromoPorcentaje extends Producto {
+
 	protected ArrayList<Atracciones> atracciones;
 	private double porcentajeDescuento;
 
-	public PromoPorcentaje(ArrayList<Atracciones> atracciones, double Porcent, String nombre, TipoAtraccion tipoAtraccion) {
+	public PromoPorcentaje(ArrayList<Atracciones> atracciones, double Porcent, String nombre,
+			TipoAtraccion tipoAtraccion) {
 		super(atracciones, nombre, tipoAtraccion);
 		this.atracciones = atracciones;
 		this.setPorcentajeDescuento(Porcent);
@@ -23,21 +23,19 @@ public class PromoPorcentaje extends Producto{
 	public double getPrecioDescuento() {
 		return super.getCostoTotal() - (super.getCostoTotal() * this.getPorcentajeDescuento());
 	}
-	
+
+	// Obtener porcentaje descuento
 	public double getPorcentajeDescuento() {
-		return this.porcentajeDescuento/100;
+		return this.porcentajeDescuento / 100;
 	}
-	
+
+	// Descuenta un cupo a las atracciones incluidas
 	@Override
 	public void descontarCupoProducto() {
-	
-	for (int i = 0; i < this.atracciones.size(); i++) {
-		
-		this.atracciones.get(i).descontarCupoAtraccion();
-		
+		for (int i = 0; i < this.atracciones.size(); i++) {
+			this.atracciones.get(i).descontarCupoAtraccion();
 		}
-
-}
+	}
 
 	// obtener nombre atracciones
 	@Override
@@ -48,10 +46,11 @@ public class PromoPorcentaje extends Producto{
 		}
 		return nombres;
 	}
-	
+
+	// obtiene las atracciones que incluye la promo
 	@Override
 	public ArrayList<Atracciones> getAtracciones() {
 		return this.atracciones;
 	}
-	
+
 }

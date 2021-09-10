@@ -3,48 +3,41 @@ package TurismoenlaTierraMedia;
 import java.util.ArrayList;
 
 public abstract class Producto {
-	
+
 	protected String nombreProducto;
 	protected TipoAtraccion tipoAtraccion;
 	protected double costoTotal;
 	protected double duracionTotal;
-	
-	
 
 	// Constructor para Producto con Promos
 	public Producto(ArrayList<Atracciones> atracciones, String nombreProducto, TipoAtraccion tipoAtraccion) {
 		this.setCostoTotal(atracciones);
 		this.setDuracionTotal(atracciones);
-		this.nombreProducto=nombreProducto;
-		this.tipoAtraccion=tipoAtraccion;
-		
-		
-		
+		this.nombreProducto = nombreProducto;
+		this.tipoAtraccion = tipoAtraccion;
 	}
-	
+
 	// Constructor para Producto con Atracciones
-	public Producto (double costo, double duracion, String nombreAtraccion, TipoAtraccion tipoDeAtraccion) {
+	public Producto(double costo, double duracion, String nombreAtraccion, TipoAtraccion tipoDeAtraccion) {
 		this.costoTotal = costo;
 		this.duracionTotal = duracion;
-		this.nombreProducto=nombreAtraccion;
-		this.tipoAtraccion=tipoDeAtraccion;
+		this.nombreProducto = nombreAtraccion;
+		this.tipoAtraccion = tipoDeAtraccion;
 	}
-	
+
 	// Constructor para Producto con Atracciones
-		public Producto (double costo, double duracion, String nombreAtraccion) {
-			this.costoTotal = costo;
-			this.duracionTotal = duracion;
-			this.nombreProducto=nombreAtraccion;
-			
-		}
-	
-	
+	public Producto(double costo, double duracion, String nombreAtraccion) {
+		this.costoTotal = costo;
+		this.duracionTotal = duracion;
+		this.nombreProducto = nombreAtraccion;
+	}
+
 	public Producto() {
 	}
-	
+
 	// obtener el nombre de las atracciones, cada subclase lo implementa distinto
 	public abstract ArrayList<String> getNombreAtracciones();
-	
+
 	// Set el precio SIN el descuento
 	public void setCostoTotal(ArrayList<Atracciones> atrIncluidas) {
 		double costo = 0;
@@ -53,16 +46,14 @@ public abstract class Producto {
 		}
 		this.costoTotal = costo;
 	}
-	
+
 	// Obtener el precio SIN descuento
-	public Double getCostoTotal(){
+	public Double getCostoTotal() {
 		return this.costoTotal;
 	}
-	
-	
+
 	// Obtenga precio con descuento
 	public abstract double getPrecioDescuento();
-	
 
 	// Set el tiempo total
 	public void setDuracionTotal(ArrayList<Atracciones> atrIncluidas) {
@@ -72,24 +63,19 @@ public abstract class Producto {
 		}
 		this.duracionTotal = tiempo;
 	}
-	
-	
-	//descontar cupo
-	
+
+	// descontar cupo
 	public abstract void descontarCupoProducto();
-		
+
+	// obtiene las atracciones incluidas en el producto
 	public abstract ArrayList<Atracciones> getAtracciones();
-		
-		
-	
-	
 
 	// Obtener duracion total
 	public double getDuracionTotal() {
 		return this.duracionTotal;
 	}
-	
-	//obtenertipoAtraccion
+
+	// obtenertipoAtraccion
 	public TipoAtraccion getTipoDeAtraccion() {
 		return this.tipoAtraccion;
 	}

@@ -4,26 +4,16 @@ import java.util.ArrayList;
 
 public class Atracciones extends Producto implements Comparable<Atracciones> {
 
-
-	//String nombreAtraccion;
-	//private TipoAtraccion tipoDeAtraccion;
-	
 	private int cupoPersonas;
-	
 
-	public Atracciones(String nombreAtraccion, double costoAtraccion, double duracionAtraccion, int cupoPersonas,TipoAtraccion tipoDeAtraccion) {
-		
-		super (costoAtraccion, duracionAtraccion, nombreAtraccion, tipoDeAtraccion);
-		
-	
+	public Atracciones(String nombreAtraccion, double costoAtraccion, double duracionAtraccion, int cupoPersonas,
+			TipoAtraccion tipoDeAtraccion) {
+		super(costoAtraccion, duracionAtraccion, nombreAtraccion, tipoDeAtraccion);
 		this.cupoPersonas = cupoPersonas;
-		
-
 	}
-	
+
 	public Atracciones(String nombreAtraccion, double costoAtraccion, double duracionAtraccion) {
-		super (costoAtraccion, duracionAtraccion, nombreAtraccion);
-		
+		super(costoAtraccion, duracionAtraccion, nombreAtraccion);
 	}
 
 	public Atracciones() {
@@ -45,34 +35,28 @@ public class Atracciones extends Producto implements Comparable<Atracciones> {
 		return super.duracionTotal;
 	}
 
-	// informa el tipo de atraccion que es.
-	/*public TipoAtraccion getTipoDeAtraccion() {
-		return this.tipoDeAtraccion;
-	}*/
-
 	// informa el cupo de personas que queda.
 	public int getCupoPersonas() {
 		return cupoPersonas;
 	}
 
 	// Descuenta 1 persona al total
-	
 	public void descontarCupoAtraccion() {
 		this.cupoPersonas -= 1;
 	}
-	
+
 	// Descuenta 1 persona al total
 	@Override
 	public void descontarCupoProducto() {
-				this.descontarCupoAtraccion();
-			}
-	
+		this.descontarCupoAtraccion();
+	}
+
 	// Para la lista producto
 	@Override
 	public double getPrecioDescuento() {
 		return super.costoTotal;
 	}
-	
+
 	// Para la lista producto comvierto el nombre a string
 	@Override
 	public ArrayList<String> getNombreAtracciones() {
@@ -87,13 +71,13 @@ public class Atracciones extends Producto implements Comparable<Atracciones> {
 				+ super.tipoAtraccion;
 	}
 
+	// Guarda esta atraccion en un ArrayList
 	@Override
-	public ArrayList <Atracciones> getAtracciones() {
+	public ArrayList<Atracciones> getAtracciones() {
 		ArrayList<Atracciones> atrac = new ArrayList<>();
 		atrac.add(this);
 		return atrac;
 	}
-	
 
 	@Override
 	public int compareTo(Atracciones o) {

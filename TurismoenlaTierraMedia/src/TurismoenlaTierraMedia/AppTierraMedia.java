@@ -22,24 +22,7 @@ public class AppTierraMedia {
 
 		Sistema.ordenarPromosPorPrecio(productosFinales);
 
-		// -----------------
 		// ------------------------------------------------------------------------------------------------------
-		// CHEQUEO QUE ME GUARDE BIEN LOS PRODUCTOS A LA LISTA FINAL
-
-		/*
-		 * System.out.println("TODAS LOS PRODUCTOS SON: ");
-		 * 
-		 * for(Producto opciones: productosFinales) { ArrayList<String>
-		 * nombresAtrIncluidas = opciones.getNombreAtracciones();
-		 * System.out.println("Inluye: "); for( int i = 0; i <
-		 * nombresAtrIncluidas.size(); i++) {
-		 * System.out.println(nombresAtrIncluidas.get(i)); }
-		 * System.out.println("a un precio de " + opciones.getPrecioDescuento() +
-		 * " monedas y dura " + opciones.getDuracionTotal()); System.out.println(); }
-		 */
-
-		// ------------------------------------------------------------------------------------------------------
-		// CHEQUEO QUE ME GUARDE BIEN LOS PRODUCTOS A LA LISTA FINAL
 
 		for (Usuario user : usuario) {
 
@@ -47,10 +30,7 @@ public class AppTierraMedia {
 
 			misGustos.addAll(Sistema.getProductosQueMeGustan(productosFinales, user.getPreferencia()));
 
-			// System.out.println(misGustos);
-
 			// SE CREA LISTA PARA GUARDAR ITINERARIO
-			//LinkedList<Producto> itinerario = new LinkedList<Producto>();
 			LinkedList<Atracciones> itinerario = new LinkedList<Atracciones>();
 
 			// se crean contadores para guardar dinero y tiempo.
@@ -66,11 +46,8 @@ public class AppTierraMedia {
 				ArrayList<String> nombresAtrIncluidas = opciones.getNombreAtracciones();
 
 				// >>>>>FALTA CONTROLAR SI LA ATRACCION TIENE CUPO<<<<<
-
-				// if puede comprar y no está en Itinerario
-				// if (user.puedeComprar(opciones) && noEstaEnItinerario(opciones, itinerario)
-				
-				//if (user.puedeComprar(opciones)) 
+				// if puede comprar y no está en Itinerario Y TIENE CUPO !!
+				// >>>>> AGREGAR SI TIENE CUPO
 				if (user.puedeComprar(opciones) && AppTierraMedia.noEstaEnItinerario(opciones, itinerario)){
 
 					// imprime por consola el saldo y el tiempo disponible
@@ -89,7 +66,6 @@ public class AppTierraMedia {
 					System.out.println("La duracion en horas es : " + opciones.getDuracionTotal());
 
 					// Solicita si quiere comprar esa Atraccion
-
 					Scanner opcion = new Scanner(System.in);
 					System.out.println("Desea comprar esta oferta S/N");
 					String opt = opcion.next();
@@ -101,14 +77,7 @@ public class AppTierraMedia {
 						System.out.println(">>> GRACIAS POR SU COMPRA ");
 						System.out.println("-----------------------------------------");
 
-						/*
-						 * <<<<<< FALTA SACAR DE LA LISTA LO QUE COMPRO <<<<<<<<<<<<<<<<<<<<<<<
-						 * <<<<<<<<<<<<<<<<<< <<<<<<<<<<<< <<<<< <<< < < <
-						 * 
-						 */
-
 						// descuenta CUPO en atracciones
-
 						opciones.descontarCupoProducto();
 
 						// Descuenta tiempo y dinero en usuario
@@ -120,15 +89,11 @@ public class AppTierraMedia {
 						tiempoTotal += opciones.getDuracionTotal();
 
 						// agrega al itinerario la compra
-						
 						ArrayList<Atracciones> atrac = opciones.getAtracciones();
 						for(int i = 0; i < atrac.size(); i++) {
 							itinerario.add(atrac.get(i));
 						}
-						
-
 					} // CIERRA EL IF
-
 				} // CIERRA EL IF SI TIENE DINERO
 
 				System.out.println(" ");
@@ -143,7 +108,6 @@ public class AppTierraMedia {
 
 	}
 	
-	// atraccion no producto
 	public static boolean noEstaEnItinerario(Producto producto, LinkedList<Atracciones> itinerario) {
 		boolean noEncontrado = true;
 		
@@ -151,7 +115,6 @@ public class AppTierraMedia {
 		ArrayList<String> nombresAtrIncluidas = producto.getNombreAtracciones();
 
 		// if itinerario contains el producto/la atraccion
-		
 		for (int j = 0; j < nombresAtrIncluidas.size(); j++) {	
 				for(int i = 0; i < itinerario.size(); i++){
 					//noEncontrado = !itinerario.contains(nombresAtrIncluidas.get(j));
