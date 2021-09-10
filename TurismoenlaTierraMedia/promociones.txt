@@ -1,6 +1,9 @@
-Por,Bosque Negro,Mordor,20
-Abs,Lothlorien,La Comarca,36
-AxB,Minas Tirith,Abismo de Helm,Erebor
-Por,Moria,Mordor,10
-Abs,Erebor,Minas Tirith,15
-AxB,Moria,Mordor,Bosque Negro
+Por,PACK AVENTURA,AVENTURA,Bosque Negro,Mordor,20
+Abs,PACK DEGUSTACION,DEGUSTACION,Lothlorien,La Comarca,36
+AxB,PACK PAISAJE,PAISAJE,Minas Tirith,Abismo de Helm,Erebor
+Por,PACK DOBLE AVENTURA,AVENTURA,Moria,Mordor,10
+Abs,PACK DOBLEPAISAJE,PAISAJE,Erebor,Minas Tirith,15
+AxB,PACK DOBLEAVENTURAS,AVENTURA,Moria,Mordor,Bosque Negro
+Por,PACK DEGUSTACION SIMPLE,DEGUSTACION,La Comarca,15
+Abs,PACK AVENTURA SIMPLE,AVENTURA,Mordor,20
+AxB,PACK PAISAJE 2X1,PAISAJE,Erebor,Abismo de Helm
