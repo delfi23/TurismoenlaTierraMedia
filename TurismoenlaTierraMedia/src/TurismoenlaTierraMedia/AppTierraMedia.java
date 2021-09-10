@@ -14,7 +14,7 @@ public class AppTierraMedia {
 
 		List<Atracciones> atracciones = Sistema.getAtracciones("atracciones.in");
 		
-		// Crea una lista tipo Producto con sólo las Promos
+		// Crea una lista tipo Producto con sÃ³lo las Promos
 		List<Producto> promociones = Sistema.getPromociones("promociones.txt");
 		
 		// Crea una lista tipo Producto con todos los productos finales
@@ -65,7 +65,7 @@ public class AppTierraMedia {
 			System.out.println("Tenemos las siguientes Sugerencias para vos!");
 			
 
-				for(Producto opciones: productosFinales) {
+				for(Producto opciones: misGustos) {
 					
 					ArrayList<String> nombresAtrIncluidas = opciones.getNombreAtracciones();
 					
