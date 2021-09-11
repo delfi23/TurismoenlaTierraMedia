@@ -93,7 +93,7 @@ public class Sistema {
 	// --------------------
 	// GRABAR COMPRAS
 
-	public static void escribirCompras(String nombre, double tiempoTotal, int dineroTotal, List<Atracciones> producto,
+	public static void escribirCompras(String nombre, double tiempoTotal, double dineroTotal, List<Atracciones> producto,
 			String file)
 
 			throws IOException {
@@ -121,7 +121,6 @@ public class Sistema {
 			ArrayList<String> nombresAtrIncluidas = compra.getNombreAtracciones();
 
 			for (int i = 0; i < nombresAtrIncluidas.size(); i++) {
-
 				salida.println(nombresAtrIncluidas.get(i));
 			}
 

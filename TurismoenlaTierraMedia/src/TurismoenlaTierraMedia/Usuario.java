@@ -3,11 +3,11 @@ package TurismoenlaTierraMedia;
 public class Usuario {
 
 	private String nombre = " ";
-	private int dineroDisponible;
+	private double dineroDisponible;
 	private double tiempoDisponible;
 	private TipoAtraccion preferencia;
 
-	public Usuario(String nombre, int dineroDisponible, double tiempoDisponible, TipoAtraccion preferencia) {
+	public Usuario(String nombre, double dineroDisponible, double tiempoDisponible, TipoAtraccion preferencia) {
 
 		this.nombre = nombre;
 		this.dineroDisponible = dineroDisponible;
@@ -29,8 +29,9 @@ public class Usuario {
 	}
 
 	// devuelve la cantidad de dinero que posee
-	public int getDineroDisponible() {
-		return this.dineroDisponible;
+	public double getDineroDisponible() {
+		double dinero = Math.round(dineroDisponible * 100)/100d;
+		return dinero;
 	}
 
 	// actualiza el dinero disponible
