@@ -11,7 +11,7 @@ Sistema que ofrece paquetes turísticos al usuario teniendo en cuenta sus prefer
           - Se prioriza la oferta de promociones, las atracciones más caras y que requieran mayor tiempo, en ese orden.
           - No oferta una atracción o promoción que no pueda costearse o para la cual no tenga tiempo disponible.
           - Tampoco oferta una atracción incluida en una promoción anteriormente comprada por el mismo usuario.
-          - Una vez agotadas las ofertas que coincidan con sus intereses, se ofertan aquellas que no coincidan, bajo el mismo criterio. (FALTA QUE INCLUYA ESTO)
+          - Una vez agotadas las ofertas que coincidan con sus intereses, se ofertan aquellas que no coincidan, bajo el mismo criterio.
       - Lo que el usuario acepta/compra, se guarda dentro de su itinerario. Una atracción o promoción aceptada no podrá cancelarse.
       - Se repite el proceso hasta que no quede tiempo disponible, monedas, o cupo en las atracciones, conforme las ofertas restantes.
       - Se guarda un resumen de todo su itinerario, con las horas necesarias para realizarlo y las monedas que deberá gastar.
