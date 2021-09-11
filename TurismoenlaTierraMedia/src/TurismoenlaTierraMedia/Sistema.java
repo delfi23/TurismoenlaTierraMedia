@@ -139,24 +139,7 @@ public class Sistema {
 
 	}
 
-	// PRUEBO DEVOLVER ATRACCIONES QUE LE GUSTAN
-
-	public static List<Atracciones> getMeGustan(List<Atracciones> atracciones, TipoAtraccion tipo) {
-
-		List<Atracciones> queMeGustan = new ArrayList<Atracciones>();
-
-		for (Atracciones ca : atracciones)
-			if (ca.getTipoDeAtraccion() == tipo)
-				queMeGustan.add(ca);
-
-		for (Atracciones ca : atracciones)
-			if (ca.getTipoDeAtraccion() != tipo)
-				queMeGustan.add(ca);
-
-		return queMeGustan;
-	}
-
-	// PRUEBO DEVOLVER productos QUE LE GUSTAN
+	// DEVUELVE productos QUE LE GUSTAN
 
 	public static List<Producto> getProductosQueMeGustan(List<Producto> productos, TipoAtraccion tipo) {
 
@@ -165,11 +148,7 @@ public class Sistema {
 		for (Producto ca : productos)
 			if (ca.getTipoDeAtraccion() == tipo)
 				queMeGustan.add(ca);
-
-		for (Producto ca : productos)
-			if (ca.getTipoDeAtraccion() != tipo)
-				queMeGustan.add(ca);
-
+		
 		return queMeGustan;
 	}
 
