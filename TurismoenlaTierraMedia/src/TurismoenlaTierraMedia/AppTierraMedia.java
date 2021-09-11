@@ -45,10 +45,8 @@ public class AppTierraMedia {
 
 				ArrayList<String> nombresAtrIncluidas = opciones.getNombreAtracciones();
 
-				// >>>>>FALTA CONTROLAR SI LA ATRACCION TIENE CUPO<<<<<
-				// if puede comprar y no está en Itinerario Y TIENE CUPO !!
-				// >>>>> AGREGAR SI TIENE CUPO
-				if (user.puedeComprar(opciones) && AppTierraMedia.noEstaEnItinerario(opciones, itinerario)){
+				// if puede comprar y no está en Itinerario y si tiene cupo
+				if (user.puedeComprar(opciones) && AppTierraMedia.noEstaEnItinerario(opciones, itinerario) && AppTierraMedia.tieneCupo(opciones)){
 
 					// imprime por consola el saldo y el tiempo disponible
 					System.out.println("Su saldo es: " + user.getDineroDisponible() + " Su tiempo disponible es: "
@@ -124,6 +122,20 @@ public class AppTierraMedia {
 			}
 		}
 		return noEncontrado;
+	}
+	
+	public static boolean tieneCupo(Producto producto) {
+		boolean hayCupo = true;
+		
+		// obtengo las atracciones contenidas en producto
+		ArrayList<Atracciones> atrac = producto.getAtracciones();
+		
+		for(int i = 0; i < atrac.size(); i++) {
+			if(atrac.get(i).getCupoPersonas() < 1) {
+				hayCupo = false;
+			}
+		}
+		return hayCupo;
 	}
 
 }
