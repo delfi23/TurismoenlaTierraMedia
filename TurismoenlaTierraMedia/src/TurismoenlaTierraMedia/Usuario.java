@@ -1,14 +1,13 @@
 package TurismoenlaTierraMedia;
 
-import TurismoenlaTierraMedia.Atracciones;
-
 public class Usuario {
+
 	private String nombre = " ";
-	private int dineroDisponible;
+	private double dineroDisponible;
 	private double tiempoDisponible;
 	private TipoAtraccion preferencia;
 
-	public Usuario(String nombre, int dineroDisponible, double tiempoDisponible, TipoAtraccion preferencia) {
+	public Usuario(String nombre, double dineroDisponible, double tiempoDisponible, TipoAtraccion preferencia) {
 
 		this.nombre = nombre;
 		this.dineroDisponible = dineroDisponible;
@@ -30,8 +29,9 @@ public class Usuario {
 	}
 
 	// devuelve la cantidad de dinero que posee
-	public int getDineroDisponible() {
-		return this.dineroDisponible;
+	public double getDineroDisponible() {
+		double dinero = Math.round(dineroDisponible * 100)/100d;
+		return dinero;
 	}
 
 	// actualiza el dinero disponible
@@ -60,17 +60,21 @@ public class Usuario {
 	public boolean tieneDinero() {
 		return this.dineroDisponible > 0;
 	}
-
-	// Pregunta si tiene dinero y tiempo para comprar una atraccion
-
-	public boolean puedeComprar(Atracciones atraccion) {
-		return (this.getDineroDisponible() >= atraccion.getCostoAtraccion()
-				&& this.getTiempoDisponible() >= atraccion.getDuracionAtraccion());
+	
+	//Pregunta si tiene dinero y tiempo para comprar una atraccion
+	
+	public boolean puedeComprar(Producto producto) {
+		return (this.getDineroDisponible() >= producto.getCostoTotal()
+				&&this.getTiempoDisponible()>=producto.getDuracionTotal());
 	}
+	
 
 	@Override
 	public String toString() {
 		return nombre + "," + dineroDisponible + "," + tiempoDisponible + "," + preferencia;
 	}
 
+	public static void main(String[] args) {
+
+	}
 }

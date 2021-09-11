@@ -1,12 +1,15 @@
 package TurismoenlaTierraMedia;
 
-public class PromoAbsoluta extends Producto{
-	
-	private Double precioFinal;
-	protected Atracciones [] atracciones;
+import java.util.ArrayList;
 
-	public PromoAbsoluta(Atracciones[] atracciones, Double precioFinal) {
-		super(atracciones);
+public class PromoAbsoluta extends Producto {
+
+	private Double precioFinal;
+	protected ArrayList<Atracciones> atracciones;
+
+	public PromoAbsoluta(ArrayList<Atracciones> atracciones, Double precioFinal, String nombre,
+			TipoAtraccion tipoAtraccion) {
+		super(atracciones, nombre, tipoAtraccion);
 		this.setDescuentoAbsoluto(precioFinal);
 		this.atracciones = atracciones;
 	}
@@ -17,17 +20,32 @@ public class PromoAbsoluta extends Producto{
 
 	// Obtener precio CON descuento
 	@Override
-	public Double getPrecioDescuento() {
+	public double getPrecioDescuento() {
 		return this.precioFinal;
 	}
-	
+
+	// Descuento un lugar al cupo de las atracciones que incluye esta promo
+	@Override
+	public void descontarCupoProducto() {
+		for (int i = 0; i < this.atracciones.size(); i++) {
+			this.atracciones.get(i).descontarCupoAtraccion();
+		}
+	}
+
 	// Obtener el nombre de las atracciones
 	@Override
-	public String[] getNombreAtracciones() {
-		String [] nombres = new String [2];
-		for (int i = 0; i < this.atracciones.length; i++) {
-			nombres[i] = this.atracciones[i].getNombreAtraccion();
+	public ArrayList<String> getNombreAtracciones() {
+		ArrayList<String> nombres = new ArrayList<>();
+		for (int i = 0; i < this.atracciones.size(); i++) {
+			nombres.add(this.atracciones.get(i).getNombreAtraccion());
 		}
 		return nombres;
 	}
+
+	// Obtengo atracciones incluidas
+	@Override
+	public ArrayList<Atracciones> getAtracciones() {
+		return this.atracciones;
+	}
+
 }
