@@ -12,6 +12,7 @@ public class PromoAxB extends Producto {
 		super(atracciones, nombre, tipoAtraccion);
 		this.atrGratis = atrGratis;
 		this.atracciones = atracciones;
+		this.atracciones.add(atrGratis);
 	}
 
 	// Obtener precio CON descuento
@@ -40,7 +41,7 @@ public class PromoAxB extends Producto {
 	// Guardarle la atraccion Gratis
 	@Override
 	public ArrayList<Atracciones> getAtracciones() {
-		this.atracciones.add(atrGratis);
+		//cambie el metodo porque cada llamada agregaba el item gratis.
 		return this.atracciones;
 	}
 
