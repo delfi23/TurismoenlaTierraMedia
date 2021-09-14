@@ -68,5 +68,4 @@ public class PromoAxB extends Producto {
 	protected Atracciones getAtraccion() {
 		return null;
 	}
-
 }

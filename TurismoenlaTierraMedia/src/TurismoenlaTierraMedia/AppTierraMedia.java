@@ -12,7 +12,7 @@ public class AppTierraMedia {
 
 		List<Usuario> usuario = Sistema.getUsuario("usuarios.in");
 
-		// Crea una lista tipo Producto con sólo las Promos
+		// Crea una lista tipo Producto con sÃ³lo las Promos
 		List<Producto> promociones = Sistema.getPromociones("promociones.txt");
 
 		// Crea una lista tipo Producto con todos los productos finales
