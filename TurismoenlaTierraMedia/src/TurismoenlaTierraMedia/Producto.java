@@ -1,6 +1,7 @@
 package TurismoenlaTierraMedia;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public abstract class Producto {
 
@@ -35,8 +36,7 @@ public abstract class Producto {
 	public Producto() {
 	}
 
-	// obtener el nombre de las atracciones, cada subclase lo implementa distinto
-	public abstract ArrayList<String> getNombreAtracciones();
+	public abstract ArrayList<String> getNombreAtracEnPromo();
 
 	// Set el precio SIN el descuento
 	public void setCostoTotal(ArrayList<Atracciones> atrIncluidas) {
@@ -67,9 +67,6 @@ public abstract class Producto {
 	// descontar cupo
 	public abstract void descontarCupoProducto();
 
-	// obtiene las atracciones incluidas en el producto
-	public abstract ArrayList<Atracciones> getAtracciones();
-
 	// Obtener duracion total
 	public double getDuracionTotal() {
 		return this.duracionTotal;
@@ -79,4 +76,58 @@ public abstract class Producto {
 	public TipoAtraccion getTipoDeAtraccion() {
 		return this.tipoAtraccion;
 	}
+
+	// ve si no esta en itinerario
+	public boolean noEstaEnItinerario(LinkedList<Atracciones> itinerario) {
+		boolean noEncontrado = true;
+
+		if (this.esPromo()) {
+			ArrayList<String> nombresAtrIncluidas = this.getNombreAtracEnPromo();
+
+			// if itinerario tiene alguna de las atracciones de la promo
+			for (int j = 0; j < nombresAtrIncluidas.size(); j++) {
+				for (int i = 0; i < itinerario.size(); i++) {
+					if (itinerario.get(i).getNombreAtraccion().equals(nombresAtrIncluidas.get(j)))
+						return false;
+				}
+			}
+		} // SI no es promo se fija si contiene el nombre de la atraccion simple
+		else {
+			for (int i = 0; i < itinerario.size(); i++) {
+				if (itinerario.get(i).getNombreAtraccion().equals(this.nombreProducto))
+					return false;
+			}
+		}
+
+		return noEncontrado;
+	}
+
+	// chequea si tiene cupo la promo o la atraccion
+	public boolean tieneCupo() {
+		boolean hayCupo = true;
+
+		// si es promo chequea cada una de las atracciones que la componen
+		if (this.esPromo()) {
+			ArrayList<Atracciones> atrac = this.getAtraccionesPromo();
+			for (int i = 0; i < atrac.size(); i++) {
+				if (!atrac.get(i).tieneCupo())
+					return false;
+			}
+		} // SI es atraccion se fija solo en esa
+		else {
+			if (!this.tieneCupo())
+				return false;
+		}
+
+		return hayCupo;
+	}
+
+	// devuelve si es promo o no
+	public abstract boolean esPromo();
+
+	// si es promo obtiene las atracciones que incluye, si es atraccion no hace nada
+	protected abstract ArrayList<Atracciones> getAtraccionesPromo();
+
+	// si es atraccion obtiene a ella misma, si es promo no hace nada
+	protected abstract Atracciones getAtraccion();
 }

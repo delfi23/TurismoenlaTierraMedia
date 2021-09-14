@@ -8,7 +8,6 @@ public class Usuario {
 	private TipoAtraccion preferencia;
 
 	public Usuario(String nombre, double dineroDisponible, double tiempoDisponible, TipoAtraccion preferencia) {
-
 		this.nombre = nombre;
 		this.dineroDisponible = dineroDisponible;
 		this.tiempoDisponible = tiempoDisponible;
@@ -30,7 +29,7 @@ public class Usuario {
 
 	// devuelve la cantidad de dinero que posee
 	public double getDineroDisponible() {
-		double dinero = Math.round(dineroDisponible * 100)/100d;
+		double dinero = Math.round(dineroDisponible * 100) / 100d;
 		return dinero;
 	}
 
@@ -60,21 +59,10 @@ public class Usuario {
 	public boolean tieneDinero() {
 		return this.dineroDisponible > 0;
 	}
-	
-	//Pregunta si tiene dinero y tiempo para comprar una atraccion
-	
+
+	// Pregunta si tiene dinero y tiempo para comprar una atraccion
 	public boolean puedeComprar(Producto producto) {
-		return (this.getDineroDisponible() >= producto.getCostoTotal()
-				&&this.getTiempoDisponible()>=producto.getDuracionTotal());
-	}
-	
-
-	@Override
-	public String toString() {
-		return nombre + "," + dineroDisponible + "," + tiempoDisponible + "," + preferencia;
-	}
-
-	public static void main(String[] args) {
-
+		return (this.getDineroDisponible() >= producto.getPrecioDescuento()
+				&& this.getTiempoDisponible() >= producto.getDuracionTotal());
 	}
 }

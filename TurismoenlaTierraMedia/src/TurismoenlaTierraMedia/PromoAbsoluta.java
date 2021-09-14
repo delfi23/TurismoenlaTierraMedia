@@ -34,7 +34,7 @@ public class PromoAbsoluta extends Producto {
 
 	// Obtener el nombre de las atracciones
 	@Override
-	public ArrayList<String> getNombreAtracciones() {
+	public ArrayList<String> getNombreAtracEnPromo() {
 		ArrayList<String> nombres = new ArrayList<>();
 		for (int i = 0; i < this.atracciones.size(); i++) {
 			nombres.add(this.atracciones.get(i).getNombreAtraccion());
@@ -42,10 +42,18 @@ public class PromoAbsoluta extends Producto {
 		return nombres;
 	}
 
-	// Obtengo atracciones incluidas
 	@Override
-	public ArrayList<Atracciones> getAtracciones() {
+	public boolean esPromo() {
+		return true;
+	}
+
+	public ArrayList<Atracciones> getAtraccionesPromo() {
 		return this.atracciones;
 	}
 
+	@Override
+	protected Atracciones getAtraccion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

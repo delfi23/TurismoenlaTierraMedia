@@ -93,8 +93,8 @@ public class Sistema {
 	// --------------------
 	// GRABAR COMPRAS
 
-	public static void escribirCompras(String nombre, double tiempoTotal, double dineroTotal, List<Atracciones> producto,
-			String file)
+	public static void escribirCompras(String nombre, double tiempoTotal, double dineroTotal,
+			List<Atracciones> producto, String file)
 
 			throws IOException {
 
@@ -110,29 +110,14 @@ public class Sistema {
 
 		// recorre la lista de compras que genero el usuario
 
-		// -----------------------------
-		// ACA HAY ERROR
-		// GUARDA MAL EL ITINERARIO
-		// imprime 3 veces la última atraccion en AxB
-		// ---------------------
-
 		for (Atracciones compra : producto) {
-
-			ArrayList<String> nombresAtrIncluidas = compra.getNombreAtracciones();
-
-			for (int i = 0; i < nombresAtrIncluidas.size(); i++) {
-				salida.println(nombresAtrIncluidas.get(i));
-			}
-
+			salida.println(compra.getNombreAtraccion());
 		}
 
 		// Escribe el pie con los totales de tiempo y dinero
-
 		salida.println("---------------------------------------------");
 		salida.println("Su gasto total es de " + dineroTotal + " monedas");
 		salida.println("Su tiempo de permanencia " + tiempoTotal + " horas");
-
-		//
 
 		salida.close();
 
@@ -140,15 +125,21 @@ public class Sistema {
 
 	// DEVUELVE productos QUE LE GUSTAN
 
-	public static List<Producto> getProductosQueMeGustan(List<Producto> productos, TipoAtraccion tipo) {
+	public static List<Producto> getSugerencias(List<Producto> productos, TipoAtraccion tipo) {
 
-		List<Producto> queMeGustan = new ArrayList<Producto>();
+		List<Producto> sugerencias = new ArrayList<Producto>();
+		List<Producto> queNoCoinciden = new ArrayList<Producto>();
 
 		for (Producto ca : productos)
 			if (ca.getTipoDeAtraccion() == tipo)
-				queMeGustan.add(ca);
-		
-		return queMeGustan;
+				sugerencias.add(ca);
+			else
+				queNoCoinciden.add(ca);
+
+		// AGREGA LOS PRODUCTOS QUE NO COINCIDEN AL FINAL DE LA LISTA
+		sugerencias.addAll(queNoCoinciden);
+
+		return sugerencias;
 	}
 
 	// ---------------------------------------------------------------------------------
@@ -267,7 +258,7 @@ public class Sistema {
 
 			// Creo el objeto a agregar
 			productoAgregar = new Atracciones(atrac.getNombreAtraccion(), atrac.getCostoAtraccion(),
-					atrac.getDuracionAtraccion());
+					atrac.getDuracionAtraccion(), atrac.getCupoPersonas(), atrac.getTipoDeAtraccion());
 
 			// Guarde la atraccion en la lista de tipo Producto
 			listaProductos.add(productoAgregar);
