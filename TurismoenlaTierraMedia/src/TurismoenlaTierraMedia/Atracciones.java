@@ -39,6 +39,10 @@ public class Atracciones extends Producto implements Comparable<Atracciones> {
 	public int getCupoPersonas() {
 		return cupoPersonas;
 	}
+	
+	public boolean tieneCupo() {
+		return this.getCupoPersonas() > 0;
+	}
 
 	// Descuenta 1 persona al total
 	public void descontarCupoAtraccion() {

@@ -42,11 +42,25 @@ public class AppTierraMedia {
 			// >>> PRIMERO SUGIERE SEGUN SU PREFERENCIA DE TIPO DE ATRACCION
 			// >>> LUEGO OTRAS OPCIONES
 
+			/*
+			for (Producto opciones : sugerencias) {
+				ArrayList<String> nombresAtrIncluidas = opciones.getNombreAtracciones();
+				System.out.println("Inluye: ");
+				for (int i = 0; i < nombresAtrIncluidas.size(); i++) {
+					System.out.println(nombresAtrIncluidas.get(i));
+				}
+				System.out.println("a un precio de " + opciones.getPrecioDescuento() + " monedas y dura "
+						+ opciones.getDuracionTotal());
+				System.out.println();
+			}
+			*/
+
 			for (Producto producto : sugerencias) {
 
 				// SI PUDE COMPRAR, NO LA COMPRO AUN Y TIENE CUPO SUGIERE
-				if (user.puedeComprar(producto) && AppTierraMedia.noEstaEnItinerario(producto, itinerario)
-						&& AppTierraMedia.tieneCupo(producto)) {
+				
+				if (user.puedeComprar(producto) && producto.noEstaEnItinerario(itinerario)
+						&& producto.tieneCupo()) {
 
 					ArrayList<String> nombresAtrIncluidas = producto.getNombreAtracciones();
 
@@ -115,40 +129,6 @@ public class AppTierraMedia {
 
 		} // TERMINA FOR
 
-	}
-
-	public static boolean noEstaEnItinerario(Producto producto, LinkedList<Atracciones> itinerario) {
-		boolean noEncontrado = true;
-
-		// guarda en arrayList la atraccion simple o las atracciones incluidas en una
-		// promo
-		ArrayList<String> nombresAtrIncluidas = producto.getNombreAtracciones();
-
-		// if itinerario contains el producto/la atraccion
-		for (int j = 0; j < nombresAtrIncluidas.size(); j++) {
-			for (int i = 0; i < itinerario.size(); i++) {
-
-				if (itinerario.get(i).getNombreAtraccion().equals(nombresAtrIncluidas.get(j))) {
-					noEncontrado = false;
-				}
-
-			}
-		}
-		return noEncontrado;
-	}
-
-	public static boolean tieneCupo(Producto producto) {
-		boolean hayCupo = true;
-
-		// obtengo las atracciones contenidas en producto
-		ArrayList<Atracciones> atrac = producto.getAtracciones();
-
-		for (int i = 0; i < atrac.size(); i++) {
-			if (atrac.get(i).getCupoPersonas() < 1) {
-				hayCupo = false;
-			}
-		}
-		return hayCupo;
 	}
 
 }

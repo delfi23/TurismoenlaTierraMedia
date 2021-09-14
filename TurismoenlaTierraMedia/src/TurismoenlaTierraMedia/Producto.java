@@ -1,6 +1,7 @@
 package TurismoenlaTierraMedia;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public abstract class Producto {
 
@@ -78,5 +79,42 @@ public abstract class Producto {
 	// obtenertipoAtraccion
 	public TipoAtraccion getTipoDeAtraccion() {
 		return this.tipoAtraccion;
+	}
+	
+	// ve si no esta en itinerario
+	public boolean noEstaEnItinerario(LinkedList<Atracciones> itinerario) {
+		boolean noEncontrado = true;
+
+		// guarda en arrayList la atraccion simple o las atracciones incluidas en una
+		// promo
+		ArrayList<String> nombresAtrIncluidas = this.getNombreAtracciones();
+
+		// if itinerario contains el producto/la atraccion
+		for (int j = 0; j < nombresAtrIncluidas.size(); j++) {
+			for (int i = 0; i < itinerario.size(); i++) {
+
+				if (itinerario.get(i).getNombreAtraccion().equals(nombresAtrIncluidas.get(j))) {
+					noEncontrado = false;
+				}
+
+			}
+		}
+		return noEncontrado;
+	}
+	
+	// chequea si tiene cupo
+
+	public boolean tieneCupo() {
+		boolean hayCupo = true;
+		
+		// obtengo las atracciones contenidas en producto
+		ArrayList<Atracciones> atrac = this.getAtracciones();
+
+		for (int i = 0; i < atrac.size(); i++) {
+			if (!atrac.get(i).tieneCupo()) {
+				return false;
+			}
+		}
+		return hayCupo;
 	}
 }
