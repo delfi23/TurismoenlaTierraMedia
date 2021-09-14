@@ -61,14 +61,8 @@ public class Usuario {
 	}
 
 	// Pregunta si tiene dinero y tiempo para comprar una atraccion
-
 	public boolean puedeComprar(Producto producto) {
-		return (this.getDineroDisponible() >= producto.getCostoTotal()
+		return (this.getDineroDisponible() >= producto.getPrecioDescuento()
 				&& this.getTiempoDisponible() >= producto.getDuracionTotal());
-	}
-
-	@Override
-	public String toString() {
-		return nombre + "," + dineroDisponible + "," + tiempoDisponible + "," + preferencia;
 	}
 }

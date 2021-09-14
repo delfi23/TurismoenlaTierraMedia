@@ -37,12 +37,6 @@ public class PromoAxB extends Producto {
 		return super.duracionTotal + atrGratis.getDuracionAtraccion();
 	}
 
-	// Obtengo las atracciones Incluidas
-	@Override
-	public ArrayList<Atracciones> getAtracciones() {
-		return this.atracciones;
-	}
-
 	@Override
 	public void descontarCupoProducto() {
 		for (int i = 0; i < this.atracciones.size(); i++) {
@@ -52,15 +46,26 @@ public class PromoAxB extends Producto {
 
 	// obtener nombre atracciones inlcuidas
 	@Override
-	public ArrayList<String> getNombreAtracciones() {
-		// lista para guardar los nombre
+	public ArrayList<String> getNombreAtracEnPromo() {
 		ArrayList<String> nombres = new ArrayList<>();
-		ArrayList<Atracciones> atrac = this.getAtracciones();
 
-		for (int i = 0; i < atrac.size(); i++) {
-			nombres.add(atrac.get(i).getNombreAtraccion());
+		for (int i = 0; i < this.atracciones.size(); i++) {
+			nombres.add(this.atracciones.get(i).getNombreAtraccion());
 		}
 		return nombres;
 	}
 
+	@Override
+	public boolean esPromo() {
+		return true;
+	}
+
+	public ArrayList<Atracciones> getAtraccionesPromo() {
+		return this.atracciones;
+	}
+
+	@Override
+	protected Atracciones getAtraccion() {
+		return null;
+	}
 }

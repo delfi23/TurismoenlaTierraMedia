@@ -111,12 +111,7 @@ public class Sistema {
 		// recorre la lista de compras que genero el usuario
 
 		for (Atracciones compra : producto) {
-
-			ArrayList<String> nombresAtrIncluidas = compra.getNombreAtracciones();
-
-			for (int i = 0; i < nombresAtrIncluidas.size(); i++) {
-				salida.println(nombresAtrIncluidas.get(i));
-			}
+			salida.println(compra.getNombreAtraccion());
 		}
 
 		// Escribe el pie con los totales de tiempo y dinero
@@ -131,8 +126,6 @@ public class Sistema {
 	// DEVUELVE productos QUE LE GUSTAN
 
 	public static List<Producto> getSugerencias(List<Producto> productos, TipoAtraccion tipo) {
-
-		
 		List<Producto> sugerencias = new ArrayList<Producto>();
 		List<Producto> queNoCoinciden = new ArrayList<Producto>();
 
@@ -147,23 +140,6 @@ public class Sistema {
 
 		return sugerencias;
 	}
-	
-	/*
-	public static List<Atracciones> getSugerencias(List<Producto> atracciones, TipoAtraccion tipo) {
-
-		List<Producto> queMeGustan = new ArrayList<Atracciones>();
-
-		for (Producto ca : atracciones)
-			if (ca.getTipoDeAtraccion() == tipo)
-				queMeGustan.add(ca);
-
-		for (Prdoducto ca : atracciones)
-			if (ca.getTipoDeAtraccion() != tipo)
-				queMeGustan.add(ca);
-
-		return queMeGustan;
-	}
-	*/
 
 	// ---------------------------------------------------------------------------------
 	// Abro archivo Promociones y creo Lista Producto con ellas
@@ -281,7 +257,7 @@ public class Sistema {
 
 			// Creo el objeto a agregar
 			productoAgregar = new Atracciones(atrac.getNombreAtraccion(), atrac.getCostoAtraccion(),
-					atrac.getDuracionAtraccion());
+					atrac.getDuracionAtraccion(), atrac.getCupoPersonas(), atrac.getTipoDeAtraccion());
 
 			// Guarde la atraccion en la lista de tipo Producto
 			listaProductos.add(productoAgregar);

@@ -12,10 +12,6 @@ public class Atracciones extends Producto implements Comparable<Atracciones> {
 		this.cupoPersonas = cupoPersonas;
 	}
 
-	public Atracciones(String nombreAtraccion, double costoAtraccion, double duracionAtraccion) {
-		super(costoAtraccion, duracionAtraccion, nombreAtraccion);
-	}
-
 	public Atracciones() {
 		super();
 	}
@@ -44,6 +40,10 @@ public class Atracciones extends Producto implements Comparable<Atracciones> {
 		return this.getCupoPersonas() > 0;
 	}
 
+	public boolean tieneCupo() {
+		return this.getCupoPersonas() > 0;
+	}
+
 	// Descuenta 1 persona al total
 	public void descontarCupoAtraccion() {
 		this.cupoPersonas -= 1;
@@ -61,31 +61,28 @@ public class Atracciones extends Producto implements Comparable<Atracciones> {
 		return super.costoTotal;
 	}
 
-	// Para la lista producto comvierto el nombre a string
 	@Override
-	public ArrayList<String> getNombreAtracciones() {
-		ArrayList<String> nombres = new ArrayList<>();
-		nombres.add(super.nombreProducto);
-		return nombres;
-	}
-
-	@Override
-	public String toString() {
-		return super.nombreProducto + "," + super.costoTotal + "," + super.duracionTotal + "," + cupoPersonas + ","
-				+ super.tipoAtraccion;
-	}
-
-	// Guarda esta atraccion en un ArrayList
-	@Override
-	public ArrayList<Atracciones> getAtracciones() {
-		ArrayList<Atracciones> atrac = new ArrayList<>();
-		atrac.add(this);
-		return atrac;
+	public ArrayList<String> getNombreAtracEnPromo() {
+		return null;
 	}
 
 	@Override
 	public int compareTo(Atracciones o) {
 		return super.nombreProducto.compareTo(o.nombreProducto);
 
+	}
+
+	@Override
+	public boolean esPromo() {
+		return false;
+	}
+
+	public Atracciones getAtraccion() {
+		return this;
+	}
+
+	@Override
+	protected ArrayList<Atracciones> getAtraccionesPromo() {
+		return null;
 	}
 }

@@ -12,7 +12,7 @@ public class AppTierraMedia {
 
 		List<Usuario> usuario = Sistema.getUsuario("usuarios.in");
 
-		// Crea una lista tipo Producto con sólo las Promos
+		// Crea una lista tipo Producto con sÃ³lo las Promos
 		List<Producto> promociones = Sistema.getPromociones("promociones.txt");
 
 		// Crea una lista tipo Producto con todos los productos finales
@@ -42,30 +42,13 @@ public class AppTierraMedia {
 			// >>> PRIMERO SUGIERE SEGUN SU PREFERENCIA DE TIPO DE ATRACCION
 			// >>> LUEGO OTRAS OPCIONES
 
-			/*
-			for (Producto opciones : sugerencias) {
-				ArrayList<String> nombresAtrIncluidas = opciones.getNombreAtracciones();
-				System.out.println("Inluye: ");
-				for (int i = 0; i < nombresAtrIncluidas.size(); i++) {
-					System.out.println(nombresAtrIncluidas.get(i));
-				}
-				System.out.println("a un precio de " + opciones.getPrecioDescuento() + " monedas y dura "
-						+ opciones.getDuracionTotal());
-				System.out.println();
-			}
-			*/
-
 			for (Producto producto : sugerencias) {
 
 				// SI PUDE COMPRAR, NO LA COMPRO AUN Y TIENE CUPO SUGIERE
-				
-				if (user.puedeComprar(producto) && producto.noEstaEnItinerario(itinerario)
-						&& producto.tieneCupo()) {
-
-					ArrayList<String> nombresAtrIncluidas = producto.getNombreAtracciones();
+				if (user.puedeComprar(producto) && producto.noEstaEnItinerario(itinerario) && producto.tieneCupo()) {
 
 					// IMPRIME POR CONSOLA SALDO Y TIEMPO DIPONIBLE
-					System.out.println("Su saldo es: " + user.getDineroDisponible() + " Su tiempo disponible es: "
+					System.out.println("Su saldo es: " + user.getDineroDisponible() + ". Su tiempo disponible es: "
 							+ user.getTiempoDisponible());
 
 					System.out.println(">>>--------------------------------------------<<<");
@@ -74,15 +57,21 @@ public class AppTierraMedia {
 
 					System.out.println("Que incluye las atracciones:");
 
-					for (int i = 0; i < nombresAtrIncluidas.size(); i++) {
-						System.out.println(nombresAtrIncluidas.get(i));
+					if (producto.esPromo()) {
+						ArrayList<String> nombresAtrIncluidas = producto.getNombreAtracEnPromo();
+						for (int i = 0; i < nombresAtrIncluidas.size(); i++) {
+							System.out.println(nombresAtrIncluidas.get(i));
+						}
+					} else {
+						String nombreAtraccion = producto.nombreProducto;
+						System.out.println(nombreAtraccion);
 					}
 
 					System.out.println("A un precio de " + producto.getPrecioDescuento() + " Monedas");
 					System.out.println("La duracion en horas es : " + producto.getDuracionTotal());
 
-					// Si no es una atraccion simple es promo y se ahorra monedas
-					if (producto.getCostoTotal() != producto.getPrecioDescuento()) {
+					// Si no es una promo se ahorra monedas
+					if (producto.esPromo()) {
 						double ahorro = Math.round((producto.getCostoTotal() - producto.getPrecioDescuento()) * 100)
 								/ 100d;
 						System.out.println("Comprando este pack se ahorra un total de " + ahorro + " Monedas");
@@ -112,10 +101,14 @@ public class AppTierraMedia {
 						dineroTotal += producto.getPrecioDescuento();
 						tiempoTotal += producto.getDuracionTotal();
 
-						// agrega al itinerario la compra
-						ArrayList<Atracciones> atrac = producto.getAtracciones();
-						for (int i = 0; i < atrac.size(); i++) {
-							itinerario.add(atrac.get(i));
+						// agrega al itinerario la compra segun si es promo o no
+						if (producto.esPromo()) {
+							ArrayList<Atracciones> atrac = producto.getAtraccionesPromo();
+							for (int i = 0; i < atrac.size(); i++) {
+								itinerario.add(atrac.get(i));
+							}
+						} else {
+							itinerario.add(producto.getAtraccion());
 						}
 					} // CIERRA EL IF
 				} // CIERRA EL IF SI TIENE DINERO
