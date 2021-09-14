@@ -37,11 +37,9 @@ public class PromoAxB extends Producto {
 		return super.duracionTotal + atrGratis.getDuracionAtraccion();
 	}
 
-	// Obtengo las atracciones Incluidas luego de
-	// Guardarle la atraccion Gratis
+	// Obtengo las atracciones Incluidas
 	@Override
 	public ArrayList<Atracciones> getAtracciones() {
-		//cambie el metodo porque cada llamada agregaba el item gratis.
 		return this.atracciones;
 	}
 
@@ -55,11 +53,14 @@ public class PromoAxB extends Producto {
 	// obtener nombre atracciones inlcuidas
 	@Override
 	public ArrayList<String> getNombreAtracciones() {
+		// lista para guardar los nombre
 		ArrayList<String> nombres = new ArrayList<>();
 		ArrayList<Atracciones> atrac = this.getAtracciones();
+
 		for (int i = 0; i < atrac.size(); i++) {
 			nombres.add(atrac.get(i).getNombreAtraccion());
 		}
 		return nombres;
 	}
+
 }
