@@ -74,6 +74,7 @@ public class Atracciones extends Producto implements Comparable<Atracciones> {
 		return false;
 	}
 
+	@Override
 	public Atracciones getAtraccion() {
 		return this;
 	}
