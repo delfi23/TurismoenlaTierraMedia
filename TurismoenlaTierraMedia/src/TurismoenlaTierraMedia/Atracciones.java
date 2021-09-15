@@ -36,9 +36,6 @@ public class Atracciones extends Producto implements Comparable<Atracciones> {
 		return cupoPersonas;
 	}
 	
-	public boolean tieneCupo() {
-		return this.getCupoPersonas() > 0;
-	}
 
 	public boolean tieneCupo() {
 		return this.getCupoPersonas() > 0;
