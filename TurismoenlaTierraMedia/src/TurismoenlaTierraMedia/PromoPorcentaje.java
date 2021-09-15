@@ -59,7 +59,6 @@ public class PromoPorcentaje extends Producto {
 
 	@Override
 	protected Atracciones getAtraccion() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
