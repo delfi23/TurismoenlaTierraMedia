@@ -1,4 +1,4 @@
-package TurismoenlaTierraMedia;
+package turismoenlaTierraMedia;
 
 import java.util.ArrayList;
 

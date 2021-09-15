@@ -1,4 +1,4 @@
-package TurismoenlaTierraMedia;
+package turismoenlaTierraMedia;
 
 public enum TipoAtraccion {
 	AVENTURA, 

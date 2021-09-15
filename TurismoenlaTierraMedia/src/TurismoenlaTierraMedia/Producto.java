@@ -1,4 +1,4 @@
-package TurismoenlaTierraMedia;
+package turismoenlaTierraMedia;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -80,6 +80,7 @@ public abstract class Producto {
 	// ve si no esta en itinerario
 	public boolean noEstaEnItinerario(LinkedList<Atracciones> itinerario) {
 		boolean noEncontrado = true;
+
 		if (this.esPromo()) {
 			ArrayList<String> nombresAtrIncluidas = this.getNombreAtracEnPromo();
 

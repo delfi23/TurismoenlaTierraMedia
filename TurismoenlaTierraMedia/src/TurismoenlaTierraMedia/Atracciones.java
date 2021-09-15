@@ -1,4 +1,4 @@
-package TurismoenlaTierraMedia;
+package turismoenlaTierraMedia;
 
 import java.util.ArrayList;
 
@@ -35,7 +35,6 @@ public class Atracciones extends Producto implements Comparable<Atracciones> {
 	public int getCupoPersonas() {
 		return cupoPersonas;
 	}
-	
 
 	public boolean tieneCupo() {
 		return this.getCupoPersonas() > 0;

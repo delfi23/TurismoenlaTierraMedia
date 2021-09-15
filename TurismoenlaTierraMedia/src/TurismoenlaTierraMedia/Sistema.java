@@ -1,4 +1,4 @@
-package TurismoenlaTierraMedia;
+package turismoenlaTierraMedia;
 
 import java.io.*;
 import java.util.*;
@@ -126,6 +126,7 @@ public class Sistema {
 	// DEVUELVE productos QUE LE GUSTAN
 
 	public static List<Producto> getSugerencias(List<Producto> productos, TipoAtraccion tipo) {
+
 		List<Producto> sugerencias = new ArrayList<Producto>();
 		List<Producto> queNoCoinciden = new ArrayList<Producto>();
 
