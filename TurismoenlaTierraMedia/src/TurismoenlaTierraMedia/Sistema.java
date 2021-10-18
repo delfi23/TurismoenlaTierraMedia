@@ -1,4 +1,4 @@
-package TurismoenlaTierraMedia;
+package turismoenlaTierraMedia;
 
 import java.io.*;
 import java.util.*;
@@ -84,16 +84,17 @@ public class Sistema {
 	}
 
 	// ---------------------------------------
-	// ORDENAR ATRACCIONES X COSTO
-	public static void ordenarCosto(List<Atracciones> atraccion) {
-		Collections.sort(atraccion, new AtraccionesOrdenadasPrecio());
+
+	// ORDENAR PRODUCTOS POR PRECIO
+	public static void ordenarPromosPorPrecio(List<Producto> producto) {
+		Collections.sort(producto, new ProductosOrdenadosPrecio());
 	}
 
 	// --------------------
 	// GRABAR COMPRAS
 
-	public static void escribirCompras(String nombre, double tiempoTotal, int dineroTotal, List<Atracciones> atraccion,
-			String file)
+	public static void escribirCompras(String nombre, double tiempoTotal, double dineroTotal,
+			List<Atracciones> producto, String file)
 
 			throws IOException {
 
@@ -108,39 +109,37 @@ public class Sistema {
 		salida.println("---------------------------------------------");
 
 		// recorre la lista de compras que genero el usuario
-		for (Atracciones compra : atraccion) {
 
+		for (Atracciones compra : producto) {
 			salida.println(compra.getNombreAtraccion());
-
 		}
 
 		// Escribe el pie con los totales de tiempo y dinero
-
 		salida.println("---------------------------------------------");
 		salida.println("Su gasto total es de " + dineroTotal + " monedas");
 		salida.println("Su tiempo de permanencia " + tiempoTotal + " horas");
-
-		//
 
 		salida.close();
 
 	}
 
-	// PRUEBO DEVOLVER ATRACCIONES QUE LE GUSTAN
+	// DEVUELVE productos QUE LE GUSTAN
 
-	public static List<Atracciones> getMeGustan(List<Atracciones> atracciones, TipoAtraccion tipo) {
+	public static List<Producto> getSugerencias(List<Producto> productos, TipoAtraccion tipo) {
 
-		List<Atracciones> queMeGustan = new ArrayList<Atracciones>();
+		List<Producto> sugerencias = new ArrayList<Producto>();
+		List<Producto> queNoCoinciden = new ArrayList<Producto>();
 
-		for (Atracciones ca : atracciones)
+		for (Producto ca : productos)
 			if (ca.getTipoDeAtraccion() == tipo)
-				queMeGustan.add(ca);
+				sugerencias.add(ca);
+			else
+				queNoCoinciden.add(ca);
 
-		for (Atracciones ca : atracciones)
-			if (ca.getTipoDeAtraccion() != tipo)
-				queMeGustan.add(ca);
+		// AGREGA LOS PRODUCTOS QUE NO COINCIDEN AL FINAL DE LA LISTA
+		sugerencias.addAll(queNoCoinciden);
 
-		return queMeGustan;
+		return sugerencias;
 	}
 
 	// ---------------------------------------------------------------------------------
@@ -158,39 +157,47 @@ public class Sistema {
 
 				// Leo cada linea del archivo
 				String linea = sc.nextLine();
+
 				String[] datosPromo = linea.split(",");
 
 				String tipo = String.valueOf(datosPromo[0]);
 
+				String nombrePromo = String.valueOf(datosPromo[1]);
+
+				TipoAtraccion tipoP = TipoAtraccion.valueOf(datosPromo[2]);
+
 				Producto prod = null;
-				Atracciones[] atracIncluidas = new Atracciones[2];
+
+				ArrayList<Atracciones> atracIncluidas = new ArrayList<>();
 
 				// Agrega al array de atracciones aquellas incluidas en la Promo
-				for (int i = 1; i < datosPromo.length - 1; i++) {
-					atracIncluidas[i - 1] = obtenerAtraccion(datosPromo[i]);
+
+				for (int i = 3; i < datosPromo.length - 1; i++) {
+					atracIncluidas.add(obtenerAtraccion(datosPromo[i]));
 				}
 
 				if (tipo.equalsIgnoreCase("Por")) {
 					/*
 					 * PromoPorcentual la creo mandando el array atracciones en primer parametro y
-					 * el dato del porcentaje de descuento como segundo
+					 * el dato del porcentaje de descuento como segundo mas nombre y tipo
 					 */
 
 					prod = new PromoPorcentaje(atracIncluidas,
-							(double) Integer.parseInt(datosPromo[datosPromo.length - 1]));
+							(double) Integer.parseInt(datosPromo[datosPromo.length - 1]), nombrePromo, tipoP);
 				} else if (tipo.equalsIgnoreCase("AxB")) {
 					/*
 					 * PromoPorcentual la creo mandando el array atracciones en primer parametro y
-					 * la atraccion que es gratuita en segundo
+					 * la atraccion que es gratuita en segundo mas nombre y tipo
 					 */
-					prod = new PromoAxB(atracIncluidas, obtenerAtraccion(datosPromo[datosPromo.length - 1]));
+					prod = new PromoAxB(atracIncluidas, obtenerAtraccion(datosPromo[datosPromo.length - 1]),
+							nombrePromo, tipoP);
 				} else if (tipo.equalsIgnoreCase("Abs")) {
 					/*
 					 * PromoPorcentual la creo mandando el array atracciones en primer parametro y
-					 * el dato del costo final obtenido del archivo
+					 * el dato del costo final obtenido del archivo mas nombre y tipo
 					 */
 					prod = new PromoAbsoluta(atracIncluidas,
-							(double) Integer.parseInt(datosPromo[datosPromo.length - 1]));
+							(double) Integer.parseInt(datosPromo[datosPromo.length - 1]), nombrePromo, tipoP);
 				}
 
 				// Agrego la promo a la lista de productos
@@ -222,7 +229,7 @@ public class Sistema {
 
 				// si el nombre pasado como parametro coincide con el del iterador
 				// devuelvo esa atraccion
-				if (nombreAtraccion.equalsIgnoreCase(atrac.nombreAtraccion)) {
+				if (nombreAtraccion.equalsIgnoreCase(atrac.getNombreAtraccion())) {
 					atraccion = atrac;
 					break;
 				}
@@ -231,11 +238,11 @@ public class Sistema {
 		return atraccion;
 	}
 
-	//-------------------------------------------------------------------------------------
-	
+	// -------------------------------------------------------------------------------------
+
 	// AGREGO LAS ATRACCIONES SIMPLES A LA LISTA PRODUCTO QUE TIENE LAS PROMOS
-	// Recibe como parametro la lista tipo Producto con las promos 
-	
+	// Recibe como parametro la lista tipo Producto con las promos
+
 	public static List<Producto> getProductoFinal(List<Producto> listaProductos) {
 
 		Producto productoAgregar = null;
@@ -248,9 +255,10 @@ public class Sistema {
 
 		while (Iterator.hasNext()) {
 			Atracciones atrac = Iterator.next();
-			
-			// Creo el objeto a agregar 
-			productoAgregar = new Atracciones (atrac.getNombreAtraccion(), atrac.getCostoAtraccion(), atrac.getDuracionAtraccion());
+
+			// Creo el objeto a agregar
+			productoAgregar = new Atracciones(atrac.getNombreAtraccion(), atrac.getCostoAtraccion(),
+					atrac.getDuracionAtraccion(), atrac.getCupoPersonas(), atrac.getTipoDeAtraccion());
 
 			// Guarde la atraccion en la lista de tipo Producto
 			listaProductos.add(productoAgregar);
@@ -258,22 +266,4 @@ public class Sistema {
 
 		return listaProductos;
 	}
-
-	// sugerir la compra de promociones segun sus gustos
-
-	// si compra actualizar saldo de dinero y tiempo
-
-	// actualizar atracciones las que ya fueron compradas
-
-	// abrir archivo de atracciones
-
-	// sugerir atracciones
-
-	// //si compra actualizar saldo de dinero y tiempo
-
-	// actualizar atracciones las que ya fueron compradas
-
-	// mostrar el resto de promociones que no son
-	// de su gusto.
-
 }

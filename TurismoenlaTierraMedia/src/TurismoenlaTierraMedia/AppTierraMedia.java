@@ -1,4 +1,4 @@
-package TurismoenlaTierraMedia;
+package turismoenlaTierraMedia;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,56 +12,72 @@ public class AppTierraMedia {
 
 		List<Usuario> usuario = Sistema.getUsuario("usuarios.in");
 
-		List<Atracciones> atracciones = Sistema.getAtracciones("atracciones.in");
-		
 		// Crea una lista tipo Producto con sólo las Promos
-		List<Producto> promociones = Sistema.getPromociones("promociones.txt");
-		
+		List<Producto> promociones = Sistema.getPromociones("promociones.in");
+
 		// Crea una lista tipo Producto con todos los productos finales
 		List<Producto> productosFinales = Sistema.getProductoFinal(promociones);
 
-		Sistema.ordenarCosto(atracciones);
+		Sistema.ordenarPromosPorPrecio(productosFinales);
 
-		// Crea un ciclo for e interactua con cada usuario.
+		// ------------------------------------------------------------------------------------------------------
 
 		for (Usuario user : usuario) {
 
-			// Se crea una lista poniendo primero las preferencias
-
-			LinkedList<Atracciones> misGustos = new LinkedList<Atracciones>();
-			misGustos.addAll(Sistema.getMeGustan(atracciones, user.getPreferencia()));
-
-			// System.out.println(misGustos);
-
-			// SE crea una lista para guardar lo que compra el cliente
-
-			LinkedList<Atracciones> itinerario = new LinkedList<Atracciones>();
-
-			// se crean contadores para guardar dinero y tiempo.
-			int dineroTotal = 0;
+			// se crean y setean contadores para guardar dinero y tiempo.
+			double dineroTotal = 0;
 			double tiempoTotal = 0;
 
+			LinkedList<Producto> sugerencias = new LinkedList<Producto>();
+
+			sugerencias.addAll(Sistema.getSugerencias(productosFinales, user.getPreferencia()));
+
+			// SE CREA LISTA PARA GUARDAR ITINERARIO
+			LinkedList<Atracciones> itinerario = new LinkedList<Atracciones>();
+
 			System.out.println(user.getNombreDeUsuario() + " Bienvenido/a Tierra Media");
-			System.out.println("------------------------------------");
-			System.out.println("Tenemos las siguientes Sugerencias para vos!");
+			System.out.println("--------------------------------------------");
+			System.out.println("Tenemos las siguientes Atracciones para vos!");
 
-			for (Atracciones atr : misGustos) {
+			// >>> PRIMERO SUGIERE SEGUN SU PREFERENCIA DE TIPO DE ATRACCION
+			// >>> LUEGO OTRAS OPCIONES
 
-				if (user.puedeComprar(atr)) {
-					
-					// imprime por consola el saldo y el tiempo disponible
-					System.out.println("Su saldo es : " + user.getDineroDisponible() + " Su tiempo disponible es : "
+			for (Producto producto : sugerencias) {
+
+				// SI PUDE COMPRAR, NO LA COMPRO AUN Y TIENE CUPO SUGIERE
+				if (user.puedeComprar(producto) && producto.noEstaEnItinerario(itinerario) && producto.tieneCupo()) {
+
+					// IMPRIME POR CONSOLA SALDO Y TIEMPO DIPONIBLE
+					System.out.println("Su saldo es: " + user.getDineroDisponible() + ". Su tiempo disponible es: "
 							+ user.getTiempoDisponible());
 
-					System.out.println(">>>------------------------------------<<<");
+					System.out.println(">>>--------------------------------------------<<<");
 
-					System.out.println(
-							atr.getNombreAtraccion() + " a un precio de " + atr.getCostoAtraccion() + " Monedas");
+					System.out.println("Nuestra sugerencia es: " + producto.nombreProducto);
 
-					System.out.println("La duracion en horas es : " + atr.getDuracionAtraccion());
+					System.out.println("Que incluye las atracciones:");
+
+					if (producto.esPromo()) {
+						ArrayList<String> nombresAtrIncluidas = producto.getNombreAtracEnPromo();
+						for (int i = 0; i < nombresAtrIncluidas.size(); i++) {
+							System.out.println(nombresAtrIncluidas.get(i));
+						}
+					} else {
+						String nombreAtraccion = producto.nombreProducto;
+						System.out.println(nombreAtraccion);
+					}
+
+					System.out.println("A un precio de " + producto.getPrecioDescuento() + " Monedas");
+					System.out.println("La duracion en horas es : " + producto.getDuracionTotal());
+
+					// Si no es una promo se ahorra monedas
+					if (producto.esPromo()) {
+						double ahorro = Math.round((producto.getCostoTotal() - producto.getPrecioDescuento()) * 100)
+								/ 100d;
+						System.out.println("Comprando este pack se ahorra un total de " + ahorro + " Monedas");
+					}
 
 					// Solicita si quiere comprar esa Atraccion
-
 					Scanner opcion = new Scanner(System.in);
 					System.out.println("Desea comprar esta oferta S/N");
 					String opt = opcion.next();
@@ -70,55 +86,42 @@ public class AppTierraMedia {
 
 					if (opt.equals("S") || opt.equals("s")) {
 
-						System.out.println(">>> Usted compro " + atr.getNombreAtraccion());
+						System.out.println(">>> GRACIAS POR SU COMPRA ");
 						System.out.println("-----------------------------------------");
+						System.out.println();
 
 						// descuenta CUPO en atracciones
-
-						atr.descontarCupo();
+						producto.descontarCupoProducto();
 
 						// Descuenta tiempo y dinero en usuario
-						user.descontarDineroDisponible(atr.getCostoAtraccion());
-						user.descontarTiempoDisponible(atr.getDuracionAtraccion());
+						user.descontarDineroDisponible(producto.getPrecioDescuento());
+						user.descontarTiempoDisponible(producto.getDuracionTotal());
 
 						// contadores para totalizar
-						dineroTotal += atr.getCostoAtraccion();
-						tiempoTotal += atr.getDuracionAtraccion();
+						dineroTotal += producto.getPrecioDescuento();
+						tiempoTotal += producto.getDuracionTotal();
 
-						
-
-						// agrega al itinerario la compra
-						itinerario.add(atr);
-
+						// agrega al itinerario la compra segun si es promo o no
+						if (producto.esPromo()) {
+							ArrayList<Atracciones> atrac = producto.getAtraccionesPromo();
+							for (int i = 0; i < atrac.size(); i++) {
+								itinerario.add(atrac.get(i));
+							}
+						} else {
+							itinerario.add(producto.getAtraccion());
+						}
 					} // CIERRA EL IF
-
 				} // CIERRA EL IF SI TIENE DINERO
-				
-				System.out.println();
-				String archSalida = ("Itinerario" + user.getNombreDeUsuario() + ".out");
-
-				Sistema.escribirCompras(user.getNombreDeUsuario(), tiempoTotal, dineroTotal, itinerario, archSalida);
-
-
-			} // TERMINA FOR
-
-			
-		}
-		
-		//------------------------------------------------------------------------------------------------------
-		// CHEQUEO QUE ME GUARDE BIEN LOS PRODUCTOS A LA LISTA FINAL
-		
-		for(Producto opciones: productosFinales) {
-			String [] nombresAtrIncluidas = opciones.getNombreAtracciones();
-			System.out.println("Inluye: ");
-			for( int i = 0; i < nombresAtrIncluidas.length; i++) {
-				System.out.println(nombresAtrIncluidas[i]);
 			}
-			System.out.println("a un precio de " + opciones.getPrecioDescuento() + 
-					" monedas y dura " + opciones.getDuracionTotal());
-			System.out.println();
-		}
-		
+
+			System.out.println(" ");
+
+			String archSalida = ("Itinerario" + user.getNombreDeUsuario() + ".out");
+
+			Sistema.escribirCompras(user.getNombreDeUsuario(), tiempoTotal, dineroTotal, itinerario, archSalida);
+
+		} // TERMINA FOR
+
 	}
 
 }
